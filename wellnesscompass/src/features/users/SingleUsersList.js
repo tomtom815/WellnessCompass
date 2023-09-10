@@ -27,33 +27,33 @@ const SingleUser = ({userName}) => {
     return(
 
        
-        <table>
-            <tr>
-                <th>Name</th>
-                <th>Username</th>
-            </tr>
-            <tbody>
-
-            <tbody>
-            {
-            userResult.map((user)=> (
-                <tr>
-                    <td>{user.firstName}</td>
-                    <td>{user.username}</td>
-                </tr>
+        <body>
+            <div className='container'>
+                <div className="top-row">
+                { userResult.map((user)=> (
+                    <div className="top-left">
+                        <h2>Name:</h2>
+                        <p>{user.firstName}</p>
+                    </div>
+                    
             ))
             }
-
-            </tbody>
-
-        
-    
-    </tbody>
-    </table>
+            { userResult.map((user)=> (
+                    <div className="top-right">
+                        <h2>Username:</h2>
+                        <p>{user.username}</p>
+                    </div>
+                    
+            ))
+            }
+                </div>
+                
+                
+            </div>
+        </body>
     )
     
-
-   
+    
              
     
 }

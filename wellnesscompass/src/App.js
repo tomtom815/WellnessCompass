@@ -5,7 +5,7 @@ import Public from './components/Public';
 import Login from './features/auth/Login';
 import UsersList from './features/users/UsersList';
 import SingleUser from './features/users/SingleUsersList';
-//singleUser option is still struggling
+
 
 function App() {
   return (

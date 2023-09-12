@@ -5,6 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  width:100%;
 }
 
 code {
@@ -12,7 +13,7 @@ code {
     monospace;
 }
 .container{
-  background:green;
+  background:dodgerblue;
   color:white;
 }
 .top-row{

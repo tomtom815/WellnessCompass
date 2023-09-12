@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import User from './User'
-
+import { averageBMI, averageWeight } from '../statistics/descriptiveStatistics';
 //to display user data for the front end. 
 
 

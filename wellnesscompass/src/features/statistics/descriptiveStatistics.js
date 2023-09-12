@@ -18,7 +18,7 @@ const averageWeight = (weightObjectArray) => {
     if(!weightObjectArray.length)
     //if array is empty
         return 0;
-    const stats = new Statistics(weightObject);
+    const stats = new Statistics(weightObjectArray);
     return stats.arithmeticMean("value"); 
 }
 

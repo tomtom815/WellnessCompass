@@ -2,18 +2,20 @@ import React from 'react'
 import { useRef, useState, useEffect } from "react";
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import axios from '../../app/api/axios'
 import './Register.css'
+
 // Regular expressions for validation
 const NAME_REGEX = /^[A-Z][a-z]{2,15}$/
-const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
+const USERNAME_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%=]).{8,24}$/;
-
+const REGISTER_URL = '/register'
 
 const Register = () => {
   // Refs for input fields
   const firstNameRef = useRef();
   const lastNameRef = useRef();
-  const userRef = useRef();
+  const usernameRef = useRef();
   const errRef = useRef();
 
   // State for first name input
@@ -27,9 +29,9 @@ const Register = () => {
   const [lastNameFocus, setLastNameFocus] = useState(false);
 
   // State for username name input
-  const [user, setUser] = useState('');
-  const [validName, setValidName] = useState(false);
-  const [userFocus, setUserFocus] = useState(false);
+  const [username, setUsername] = useState('');
+  const [validUsername, setValidUsername] = useState(false);
+  const [usernameFocus, setUsernameFocus] = useState(false);
 
   // State for password input
   const [password, setPassword] = useState('');
@@ -62,7 +64,7 @@ const Register = () => {
   // The validation result is logged for debugging purposes and then stored in the "validFirstName" state.
     const result = NAME_REGEX.test(firstName);
     console.log(result);
-    console.log(user);
+    console.log(username);
     setValidFirstName(result);
   }, [firstName]);
 
@@ -71,19 +73,19 @@ const Register = () => {
     // Similar to the previous effect
     const result = NAME_REGEX.test(lastName);
     console.log(result);
-    console.log(user);
+    console.log(username);
     setValidLastName(result);
   }, [lastName]);
 
   // Use Effect to Validate and Update the "Username" Input
   useEffect(() => {
     // Similar to the previous effect
-    const result = USER_REGEX.test(user);
+    const result = USERNAME_REGEX.test(username);
     console.log(result);
-    console.log(user);
-    setValidName(result);
+    console.log(username);
+    setValidUsername(result);
 
-  }, [user]);
+  }, [username]);
 
   // Use Effect to Validate and Update the "Password" Inputs
   useEffect(() => {
@@ -103,32 +105,51 @@ const Register = () => {
   // Use Effect to Clear Error Message
   useEffect(() => {
     // This effect clears the error message whenever there are changes in the
-    // "user," "password," or "matchPassword" states.
+    // "username," "password," or "matchPassword" states.
     setErrMsg('');
-  }, [user, password, matchPassword]);
+  }, [username, password, matchPassword]);
 
   const handleSubmit = async (e) => {
     // Prevent the default form submisttion behavior to handle validation and submissions manually.
     e.preventDefault();
     
     // Check if all validation conditions are met
-    const isUsernameValid = USER_REGEX.test(user);
+    const isUsernameValid = USERNAME_REGEX.test(username);
     const isPasswordValid = PASSWORD_REGEX.test(password);
     const isFirstNameValid = NAME_REGEX.test(firstName);
     const isLastNameValid = NAME_REGEX.test(lastName);
 
-    if (!isUsernameValid || !isPasswordValid || isFirstNameValid || isLastNameValid) {
+    if (!isUsernameValid || !isPasswordValid || !isFirstNameValid || !isLastNameValid) {
       // Set error message if any of the validation conditions fail
       setErrMsg("invalid Entry");
       // Exit early to prevent submission
       return;
     }
 
-    // If all input fields are valid, log the username and password (for debugging).
-    console.log(user, password);
+    try {
+      const response = await axios.post(REGISTER_URL,
+        JSON.stringify({ firstName, lastName, username, password }),
+        {
+          headers: { ' Content-Type': 'application/json' },
+          withCredentials: true
+        }
+      );
+      console.log(response.data);
+      console.log(response.accessToken);
+      console.log(JSON.stringify(response));
+      setSuccess(true);
 
-    // Set the "Success" state to true, indicating successful registration.
-    setSuccess(true);
+      // Clear input fields. Can set state back to empty strings
+    } catch (err) {
+      if (!err?.response) {
+        setErrMsg('No Server Response');
+      } else if (err.response?.status === 409) {
+        setErrMsg('Username Taken');
+      } else {
+        setErrMsg('Registration Failed');
+      }
+      errRef.current.focus();
+    }
   }
 
   return (
@@ -206,10 +227,10 @@ const Register = () => {
 
             <label htmlFor="username">
               Username:
-              <span className={validName ? "valid" : "hide"}>
+              <span className={validUsername ? "valid" : "hide"}>
                 <FontAwesomeIcon icon={faCheck} />
               </span>
-              <span className={validName || !user ? "hide" :
+              <span className={validUsername || !username ? "hide" :
                 "invalid"}>
                 <FontAwesomeIcon icon={faTimes} />
               </span>
@@ -217,17 +238,17 @@ const Register = () => {
             <input
               type="text"
               id="username"
-              ref={userRef}
+              ref={usernameRef}
               autoComplete="off"
-              onChange={(e) => setUser(e.target.value)}
+              onChange={(e) => setUsername(e.target.value)}
               required
-              aria-invalid={validName ? "false" : "true"}
+              aria-invalid={validUsername ? "false" : "true"}
               aria-describedby="uidnote"
-              onFocus={() => setUserFocus(true)}
-              onBlur={() => setUserFocus(false)}
+              onFocus={() => setUsernameFocus(true)}
+              onBlur={() => setUsernameFocus(false)}
             />
-            <p id="uidnote" className={userFocus && user
-              && !validName ? "instructions" : "offscreen"}>
+            <p id="uidnote" className={usernameFocus && username
+              && !validUsername ? "instructions" : "offscreen"}>
               <FontAwesomeIcon icon={faInfoCircle} />
               4 to 24 characters.<br />
               Must begin with a letter.<br />
@@ -290,7 +311,7 @@ const Register = () => {
               Must match the first password input field.
             </p>
         
-            <button disabled={!validName || !validPassword || !validMatch ? true : false}
+            <button disabled={!validUsername || !validPassword || !validMatch ? true : false}
             >Sign Up</button>
           </form>
           <p>

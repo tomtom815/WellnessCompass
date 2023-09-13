@@ -1,8 +1,11 @@
-import React from 'react';
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect, useContext } from 'react';
+import AuthContext from '../../context/AuthProvider';
+
+import axios from '../../app/api/axios';
 
 
 const Login = () => {
+    const { setAuth } = useContext(AuthContext);
     const usernameRef = useRef();
     const errRef = useRef();
 

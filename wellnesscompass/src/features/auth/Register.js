@@ -9,7 +9,7 @@ import './Register.css'
 const NAME_REGEX = /^[A-Z][a-z]{2,15}$/
 const USERNAME_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%=]).{8,24}$/;
-const REGISTER_URL = '/register'
+const REGISTER_URL = '/users'
 
 const Register = () => {
   // Refs for input fields
@@ -139,7 +139,13 @@ const Register = () => {
       console.log(JSON.stringify(response));
       setSuccess(true);
 
-      // Clear input fields. Can set state back to empty strings
+      // Clear input fields. Set state back to empty strings
+      setFirstName('');
+      setLastName('');
+      setUsername('');
+      setPassword('');
+      setMatchPassword('');
+
     } catch (err) {
       if (!err?.response) {
         setErrMsg('No Server Response');
@@ -158,7 +164,7 @@ const Register = () => {
         <section>
           <h1>Success</h1>
           <p>
-            <a href="#">Sign In!</a>
+            <a href="/login">Sign In!</a>
           </p>
         </section>
       ) : (
@@ -317,8 +323,7 @@ const Register = () => {
           <p>
             Already registered?<br />
             <span className="line">
-              {/* put router link here */}
-              <a href="#">Sign In</a>
+              <a href="/login">Sign In</a>
             </span>
           </p>
         </section>

@@ -42,7 +42,7 @@ const UsersList = () => {
     console.log(sortBySteps)
 
     return(
-       <body>
+       <main>
 
        <table id = "users">
            <tr>
@@ -53,7 +53,7 @@ const UsersList = () => {
         {sortBySteps.map((user => (
         
             <tr>
-                <a href={`/users/${user.username}`}><td>{user.username}</td></a>
+                <td><a href={`/users/${user.username}`}>{user.username}</a></td>
                 <td>{user.averageSteps}</td>
             </tr>
          
@@ -62,7 +62,7 @@ const UsersList = () => {
     
     </tbody>
     </table>
-    </body>
+    </main>
     )
 
         }

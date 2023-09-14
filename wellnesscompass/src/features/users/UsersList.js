@@ -1,44 +1,46 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext} from 'react'
 import axios from 'axios';
-import User from './User'
-import { averageBMI, averageWeight } from '../statistics/descriptiveStatistics';
+
+import './userDisplays.css'
+import { averageMetric} from '../statistics/descriptiveStatistics';
+
 //to display user data for the front end. 
 
+import { GetAllUsers } from '../../app/api/fetchAllUsers';
 
 const UsersList = () => {
-    const [userResult, setUsers] = useState([]);
-    const url = `http://localhost:3500/users/`
-    useEffect(()=> {
-        axios.get(url)
-        .then(response => {
-            setUsers(response.data) ;
-            console.log(response.data)
-        })
-    },[])
+    GetAllUsers();
+    const usersResult = JSON.parse(localStorage.getItem('usersData'));
     
-    if(!userResult)
+    if(!usersResult)
     //wait for response
         return <div>Loading...</div>
+  
+    
     
     return(
-        //return an ugly table
-        <table>
-            <tr>
+       
+       <table id = "users">
+           <tr>
                 <th>Name</th>
                 <th>Username</th>
+                <th>Average Steps</th>
             </tr>
             <tbody>
-        {userResult.map((user => (
+        {usersResult.map((user => (
+            
             <tr>
                 <td>{user.firstName}</td>
                 <td>{user.username}</td>
+                <td>{averageMetric(user.steps)}</td>
             </tr>
-
+         
         )) 
     )}
+    
     </tbody>
     </table>
-
+    
     )
 
    

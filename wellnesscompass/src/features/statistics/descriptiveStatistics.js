@@ -1,6 +1,6 @@
 import * as Statistics from 'statistics.js'
 
-
+import React from 'react';
 const dataPresent = (parameterArray) => {
     if(!parameterArray.length)
         return false;
@@ -13,21 +13,19 @@ const BMI = (weight, height) => {
 }
 
 
-//pre-condition: an object of weight data is provided 
-const averageWeight = (weightObjectArray) => {
-    if(!weightObjectArray.length)
-    //if array is empty
+
+const averageMetric = (averageMetricArray) => {
+    const averageArray = averageMetricArray.map((user => (
+          user.value
+
+    )) 
+    )
+    if(!averageArray.length)
         return 0;
-    const stats = new Statistics(weightObjectArray);
-    return stats.arithmeticMean("value"); 
+    const stats = new Statistics(averageArray);
+    return stats.arithmeticMean(averageArray);
+
+   
 }
 
-const averageBMI = (BMIArray) => {
-    if(!BMIArray.length)
-    //if array is empty
-        return 0;
-    const stats = new Statistics(BMIArray);
-    return stats.arithmeticMean("value"); 
-}
-
-export {dataPresent, BMI, averageWeight, averageBMI}
+export {dataPresent, BMI, averageMetric}

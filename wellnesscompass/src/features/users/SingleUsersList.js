@@ -1,55 +1,133 @@
-//non-functional at the moment
-import React, { useEffect, useState } from 'react'
-import axios from 'axios';
-import User from './User'
-import { useParams } from 'react-router-dom';
+import React, { useState } from 'react'
+
+import Plot from 'react-plotly.js';
+import { GetAllUsers } from '../../app/api/fetchAllUsers';
+import { GetOneUser } from '../../app/api/fetchOneUser';
+//import '../statistics/displayStatistics'
 
 
 const SingleUser = ({userName}) => {
-    const [userResult, setUsers] = useState([]);
-    const {user} = useParams()
-    const url = `http://localhost:3500/users/${user}`
-    console.log((url))
-    useEffect(()=> {
-        axios.get(url,
-            {params: userName})
-        .then(response => {
-            setUsers(response.data) ;
-            console.log(response.data)
-        })
-    },[userName])
-    
-    if(!userResult){
-    //await response
+    GetOneUser({userName})
+    GetAllUsers();
+    const [toggle,setToggle] = useState(true);
+    const userResult = JSON.parse(localStorage.getItem('userSingleData')); 
+    const stepDataArray = [];
+    const dateArraySteps = []
+    const weightDataArray = [];
+    const dateArrayWeight = []
+    const activeMinutesArray = [];
+    const dateArrayActive = []
+    //arrays to hold data for display
+    const result = (userResult[0]);
+    if(!result)
         return <div>Loading...</div>
+    const stepData = result.steps;
+    const weightData = result.weight
+    const activeMinutesData = result.activeMinutes
+    if(!stepData || !weightData || !activeMinutesData)
+        return  <div>Loading...</div>
+    for(let i = 0; i < stepData.length; i++){
+        //cannot get map to work for this for some reason so we're going with
+        //a regular for-loop to add data in
+        stepDataArray[i] = stepData[i].value;
+        dateArraySteps[i] = stepData[i].date;
     }
-    
-    return(
+    for(let i = 0; i < weightData.length; i++){
+        weightDataArray[i] = weightData[i].value;
+        dateArrayWeight[i] = weightData[i].date;
+    }
+    for(let i = 0; i < activeMinutesData.length; i++){
+        activeMinutesArray[i] = activeMinutesData[i].value;
+        dateArrayActive[i] = activeMinutesData[i].date;
+    }
 
+//GAH CSS. i accidentally ruined thomas's beautiful formatting
+    return(
        
         <body>
-            <div className='container'>
-                <div className="top-row">
+            <div className = "top">
+                {/*this css doesn't work*/}
+                <div className="go-left">
+                <h2>Name:</h2>
                 { userResult.map((user)=> (
-                    <div className="top-left">
-                        <h2>Name:</h2>
-                        <p>{user.firstName}</p>
+                    <div>  
+                        <p>{user.firstName +" " +user.lastName}</p>
                     </div>
                     
             ))
             }
-            { userResult.map((user)=> (
-                    <div className="top-right">
-                        <h2>Username:</h2>
-                        <p>{user.username}</p>
-                    </div>
-                    
-            ))
-            }
-                </div>
-                
-                
             </div>
+            <div>
+            <h2>Username:</h2>
+            { userResult.map((user)=> (
+                    <p>{user.username}</p>
+  
+            ))
+            }</div>
+            
+            </div>
+                
+            
+          
+           <div id="dataContainer">
+                
+               {toggle == "steps" && ( <div id= "stepgraph">
+                    <Plot
+                        data={[
+                            {
+                            x: dateArraySteps,
+                            y: stepDataArray,
+                            type: 'scatter',
+                            mode: 'lines+markers',
+                            marker: {color: 'green'},
+                            },
+                            {type: 'bar', x: dateArraySteps, y: stepDataArray, marker: { color: "rgba(6, 57, 219, 0.4)"}},
+                        ]}
+                        layout={ {width: 420, height: 340, title: 'Steps'} }
+                        config = {{responsive :true}}/>
+                </div>)}
+                {toggle == "weight" && (
+                <div id= "weightGraph">
+                    <Plot
+                        data={[
+                            {
+                            x: dateArrayWeight,
+                            y: weightDataArray,
+                            type: 'scatter',
+                            mode: 'lines+markers',
+                            marker: {color: 'green'},
+                            },
+                            {type: 'bar', x: dateArrayWeight, y: weightDataArray, marker: { color: "rgba(6, 57, 219, 0.4)"}},
+                        ]}
+                        layout={ {width: 420, height: 340, title: 'Weight'} } />
+                 </div>
+                )}
+                {toggle == "activity" && (
+                <div id= "activeMinutesGraph">
+                    <Plot
+                        data={[
+                            {
+                            x: dateArrayActive,
+                            y: activeMinutesArray,
+                            type: 'scatter',
+                            mode: 'lines+markers',
+                            marker: {color: 'green'},
+                            },
+                            {type: 'bar', x: dateArrayActive, y: activeMinutesArray, marker: { color: "rgba(6, 57, 219, 0.4)"}},
+                        ]}
+                        layout={ {width: 420, height: 340, title: 'Active Minutes'} }
+                       
+                        />
+                 </div>
+                )}
+                <div id = "buttonLine">
+                <button className='buttonCl' onClick={()=>setToggle("steps")}><h2>Steps</h2></button>
+                <button className='buttonCl' onClick={()=>setToggle("weight")}><h2>Weight</h2></button>
+                <button className='buttonCl' onClick={()=>setToggle("activity")}><h2>Activity</h2></button>
+           </div>
+                </div> 
+      
+       
         </body>
     )
     

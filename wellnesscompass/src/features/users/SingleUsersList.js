@@ -45,27 +45,29 @@ const SingleUser = ({userName}) => {
     return(
        
         <main>
-            <div className = "top">
-                {/*this css doesn't work*/}
-                <div className="go-left">
-                <h2>Name:</h2>
+            
+                
                 { userResult.map((user)=> (
-                    <div>  
-                        <p>{user.firstName +" " +user.lastName}</p>
+                    <div className="userInfo">  
+                        <section className="column-1">
+                            <h2>Name: <span className="values">{user.firstName +" " +user.lastName}</span></h2>
+                        
+                            <h2>Username: <span className="values">{user.username}</span></h2>
+                            
+                        </section>
+                        <section className="column-2">
+                            <h3>Height: <span className="values">{user.height[user.height.length -1].value}</span></h3>
+                            
+                            <h3>Last Weight: <span className="values">{user.weight[user.weight.length - 1].value}</span></h3>
+                           
+                            <h3>Average Steps: <span className="values">{(user.steps[user.steps.length - 1].value/user.steps.length).toFixed(2)}</span></h3>
+                           
+                        </section>
                     </div>
                     
             ))
             }
-            </div>
-            <div>
-            <h2>Username:</h2>
-            { userResult.map((user)=> (
-                    <p>{user.username}</p>
-  
-            ))
-            }</div>
-            
-            </div>
+          
                 
             
           

@@ -16,12 +16,28 @@ code {
   background:dodgerblue;
   color:white;
 }
-.top-row{
-  height: 100vh;
-  width:80%;
+main{
+  width: 80%;
   margin:auto;
+}
+main .userInfo{
   display:flex;
-  align-items:center;
   justify-content: space-evenly;
-  text-align:center;
+  align-content: center;
+  flex-wrap:wrap;
+  flex-direction: row;
+}
+.userInfo section{
+  display:block;
+  min-height:200px;
+}
+.userInfo section.column-1{
+  align-items: center;
+}
+.userInfo section.column-2{
+  align-items: center;
+}
+.userInfo span.values{
+  font-weight: 200;
+
 }

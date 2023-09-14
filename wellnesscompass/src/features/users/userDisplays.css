@@ -5,11 +5,6 @@
     border-collapse: collapse;
     width: 50%;
 }
-
-#users::a{
-    text-decoration: none;
-}
-
   
 #users td, #users th {
     border: 1px solid #ddd;
@@ -34,12 +29,12 @@
 }
 
 #dataContainer{
-    border: 2px solid rgb(135, 135, 234);
     padding: 50px;
     background-color: #180e51;
     margin:auto;
     text-align: left;
-    width: 100%;
+  
+    width: 525px;
     height: auto;
    
 }

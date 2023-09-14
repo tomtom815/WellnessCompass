@@ -9,7 +9,7 @@ import './Register.css'
 const NAME_REGEX = /^[A-Z][a-z]{2,15}$/
 const USERNAME_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%=]).{8,24}$/;
-const REGISTER_URL = '/register'
+const REGISTER_URL = '/users'
 
 const Register = () => {
   // Refs for input fields
@@ -146,6 +146,7 @@ const Register = () => {
       } else if (err.response?.status === 409) {
         setErrMsg('Username Taken');
       } else {
+        console.log(err.response)
         setErrMsg('Registration Failed');
       }
       errRef.current.focus();

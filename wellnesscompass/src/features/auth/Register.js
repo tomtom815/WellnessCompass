@@ -139,7 +139,13 @@ const Register = () => {
       console.log(JSON.stringify(response));
       setSuccess(true);
 
-      // Clear input fields. Can set state back to empty strings
+      // Clear input fields. Set state back to empty strings
+      setFirstName('');
+      setLastName('');
+      setUsername('');
+      setPassword('');
+      setMatchPassword('');
+
     } catch (err) {
       if (!err?.response) {
         setErrMsg('No Server Response');
@@ -159,7 +165,7 @@ const Register = () => {
         <section>
           <h1>Success</h1>
           <p>
-            <a href="#">Sign In!</a>
+            <a href="/login">Sign In!</a>
           </p>
         </section>
       ) : (
@@ -318,8 +324,7 @@ const Register = () => {
           <p>
             Already registered?<br />
             <span className="line">
-              {/* put router link here */}
-              <a href="#">Sign In</a>
+              <a href="/login">Sign In</a>
             </span>
           </p>
         </section>

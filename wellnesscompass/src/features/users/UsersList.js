@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext} from 'react'
 import axios from 'axios';
 
 import './userDisplays.css'
-import { averageMetric} from '../statistics/descriptiveStatistics';
+import { averageMetric, averageWeeklyMetric, compare} from '../statistics/descriptiveStatistics';
 
 //to display user data for the front end. 
 
@@ -16,38 +16,50 @@ const UsersList = () => {
     //wait for response
         return <div>Loading...</div>
   
-    
+     let todayDate = new Date();
+    let lastWeekDate = new Date(todayDate.getTime()-(60*60*24*7*1000))
+    const today = todayDate.toISOString().slice(0,10);
+    const lastWeek = lastWeekDate.toISOString().slice(0,10);
+    console.log(lastWeek)
     const userNameArray = usersResult.map((user =>
         user.username))
+
+
     const averageStepsArray= usersResult.map((user =>
-        averageMetric(user.steps)))
+        averageWeeklyMetric(user.steps)))
     const averageActivityArray = usersResult.map((user =>
-        averageMetric(user.activeMinutes)))
-  
+        averageWeeklyMetric(user.activeMinutes)))
     
+    
+   
+ 
+   
     const averageValuesObject = userNameArray.map((username, index) => ({
         username, averageSteps: averageStepsArray[index], averageActivity : averageActivityArray[index]
     }))
-    
+
+   
     const sortBySteps = averageValuesObject.sort((a,b) =>{
         return b.averageSteps - a.averageSteps;
     }
     )
-    
-    const sortByActivity = averageValuesObject.sort((a,b) =>{
+    const sortByMinutes = averageValuesObject.sort((a,b) => {
         return b.averageActivity - a.averageActivity;
-    }
-    )
+    })
     
-    console.log(sortBySteps)
+    averageValuesObject.sort(compare);
+    
+    if(!sortBySteps || !sortByMinutes)
+        return <p>Loading...</p>
 
     return(
        <body>
 
+
        <table id = "users">
            <tr>
                 <th>Username</th>
-                <th>Average Steps</th>
+                <th>Average Weekly Steps</th>
             </tr>
             <tbody>
         {sortBySteps.map((user => (
@@ -58,9 +70,28 @@ const UsersList = () => {
             </tr>
          
         )) 
+
     )}
     
     </tbody>
+    </table>
+    <table>
+        <tr>
+            <th>Username</th>
+            <th>Average Weekly Active Minutes</th>
+        </tr>
+        <tbody>
+            {sortByMinutes.map((user => (
+        
+        <tr>
+            <a href={`/users/${user.username}`}><td>{user.username}</td></a>
+            <td>{user.averageActivity}</td>
+        </tr>
+     
+    )) 
+
+)}
+        </tbody>
     </table>
     </body>
     )

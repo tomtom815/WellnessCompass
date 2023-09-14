@@ -28,14 +28,15 @@ main .userInfo{
   flex-direction: row;
 }
 .userInfo section{
-  display:block;
   min-height:200px;
+  justify-content: center;
+  width:auto;
 }
 .userInfo section.column-1{
-  align-items: center;
+  
 }
 .userInfo section.column-2{
-  align-items: center;
+ 
 }
 .userInfo span.values{
   font-weight: 200;

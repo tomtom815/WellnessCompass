@@ -40,5 +40,15 @@ main .userInfo{
 }
 .userInfo span.values{
   font-weight: 200;
-
+}
+.home-buttons{
+  width: 90%;
+  margin:auto;
+  margin-top:15px;
+  margin-bottom:15px;
+  text-align:center;
+  font-size: 1em;;
+  color:whitesmoke;
+  background-color:rgb(135, 135, 234);
+  border: 2px solid rgb(255,255,255);
 }

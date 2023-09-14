@@ -44,7 +44,7 @@ const SingleUser = ({userName}) => {
 //GAH CSS. i accidentally ruined thomas's beautiful formatting
     return(
        
-        <body>
+        <main>
             <div className = "top">
                 {/*this css doesn't work*/}
                 <div className="go-left">
@@ -128,7 +128,7 @@ const SingleUser = ({userName}) => {
                 </div> 
       
        
-        </body>
+        </main>
     )
     
     

@@ -5,6 +5,11 @@
     border-collapse: collapse;
     width: 50%;
 }
+
+#users::a{
+    text-decoration: none;
+}
+
   
 #users td, #users th {
     border: 1px solid #ddd;

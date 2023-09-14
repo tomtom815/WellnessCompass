@@ -17,22 +17,44 @@ const UsersList = () => {
         return <div>Loading...</div>
   
     
+    const userNameArray = usersResult.map((user =>
+        user.username))
+    const averageStepsArray= usersResult.map((user =>
+        averageMetric(user.steps)))
+    const averageActivityArray = usersResult.map((user =>
+        averageMetric(user.activeMinutes)))
+  
     
+    const averageValuesObject = userNameArray.map((username, index) => ({
+        username, averageSteps: averageStepsArray[index], averageActivity : averageActivityArray[index]
+    }))
+    
+    const sortBySteps = averageValuesObject.sort((a,b) =>{
+        return b.averageSteps - a.averageSteps;
+    }
+    )
+    
+    const sortByActivity = averageValuesObject.sort((a,b) =>{
+        return b.averageActivity - a.averageActivity;
+    }
+    )
+    
+    console.log(sortBySteps)
+
     return(
-       
+       <body>
+
        <table id = "users">
            <tr>
-                <th>Name</th>
                 <th>Username</th>
                 <th>Average Steps</th>
             </tr>
             <tbody>
-        {usersResult.map((user => (
-            
+        {sortBySteps.map((user => (
+        
             <tr>
-                <td>{user.firstName}</td>
-                <td>{user.username}</td>
-                <td>{averageMetric(user.steps)}</td>
+                <a href={`/users/${user.username}`}><td>{user.username}</td></a>
+                <td>{user.averageSteps}</td>
             </tr>
          
         )) 
@@ -40,11 +62,11 @@ const UsersList = () => {
     
     </tbody>
     </table>
-    
+    </body>
     )
 
-   
+        }
              
     
-}
+
 export default UsersList

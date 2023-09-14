@@ -20,12 +20,20 @@ const averageMetric = (averageMetricArray) => {
 
     )) 
     )
-    if(!averageArray.length)
+    console.log(averageArray);
+    if(!averageArray || averageArray.length == 0)
         return 0;
     const stats = new Statistics(averageArray);
     return stats.arithmeticMean(averageArray);
 
    
 }
+
+
+
+const tTest = (objectMeanArray, averageOfUser) => {
+
+}
+
 
 export {dataPresent, BMI, averageMetric}

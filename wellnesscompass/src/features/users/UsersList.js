@@ -16,11 +16,6 @@ const UsersList = () => {
     //wait for response
         return <div>Loading...</div>
   
-     let todayDate = new Date();
-    let lastWeekDate = new Date(todayDate.getTime()-(60*60*24*7*1000))
-    const today = todayDate.toISOString().slice(0,10);
-    const lastWeek = lastWeekDate.toISOString().slice(0,10);
-    console.log(lastWeek)
     const userNameArray = usersResult.map((user =>
         user.username))
 
@@ -38,16 +33,21 @@ const UsersList = () => {
         username, averageSteps: averageStepsArray[index], averageActivity : averageActivityArray[index]
     }))
 
+    
+   //create copy of array
+    const sortBySteps = averageValuesObject.slice()
+    const sortByMinutes = averageValuesObject.slice()
    
-    const sortBySteps = averageValuesObject.sort((a,b) =>{
+    //sort arrays
+    sortBySteps.sort((a,b) =>{
         return b.averageSteps - a.averageSteps;
-    }
-    )
-    const sortByMinutes = averageValuesObject.sort((a,b) => {
+    })
+    
+   sortByMinutes.sort((a,b) => {
         return b.averageActivity - a.averageActivity;
     })
     
-    averageValuesObject.sort(compare);
+
     
     if(!sortBySteps || !sortByMinutes)
         return <p>Loading...</p>

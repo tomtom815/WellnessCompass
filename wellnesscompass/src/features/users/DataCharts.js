@@ -2,12 +2,15 @@ import React, { useState } from 'react'
 import { GetAllUsers } from '../../app/api/fetchAllUsers';
 import { GetOneUser } from '../../app/api/fetchOneUser';
 import Plot from 'react-plotly.js';
+//import plotGraph from '../statistics/displayStatistics';
 
 const DataCharts = ({userName}) => {
     GetOneUser({userName})
     GetAllUsers();
+  
     const [toggle,setToggle] = useState(true);
     const userResult = JSON.parse(localStorage.getItem('userSingleData')); 
+    //const allUsers = Json.parse(localStorage.getItem("usersData"));
     const stepDataArray = [];
     const dateArraySteps = []
     const weightDataArray = [];
@@ -40,7 +43,7 @@ const DataCharts = ({userName}) => {
   return (
     <div id="dataContainer">        
         {toggle == "steps" && ( <div id= "stepgraph">
-                <Plot
+        <Plot
                     data={[
                         {
                             x: dateArraySteps,
@@ -51,22 +54,23 @@ const DataCharts = ({userName}) => {
                         },
                         {
                             type: 'bar',
-                            x: dateArraySteps,
-                            y: stepDataArray, marker: { color: "rgba(6, 57, 219, 0.4)"}},
+                            x: dateArraySteps, 
+                            y: stepDataArray, 
+                            marker: { color: "rgba(6, 57, 219, 0.4)"}
+                        },
                     ]}
-                    layout={ {width: 420, height: 340, title: 'Steps'} }
-                    config = {{responsive :true}}/>
+                    layout={ {width: 420, height: 340, title: 'Steps'} } />
             </div>)}
             {toggle == "weight" && (
             <div id= "weightGraph">
                 <Plot
                     data={[
                         {
-                        x: dateArrayWeight,
-                        y: weightDataArray,
-                        type: 'scatter',
-                        mode: 'lines+markers',
-                        marker: {color: 'green'},
+                            x: dateArrayWeight,
+                            y: weightDataArray,
+                            type: 'scatter',
+                            mode: 'lines+markers',
+                            marker: {color: 'purple'},
                         },
                         {
                             type: 'bar',
@@ -83,13 +87,15 @@ const DataCharts = ({userName}) => {
                 <Plot
                     data={[
                         {
-                        x: dateArrayActive,
-                        y: activeMinutesArray,
-                        type: 'scatter',
-                        mode: 'lines+markers',
-                        marker: {color: 'green'},
+                            x: dateArrayActive,
+                            y: activeMinutesArray,
+                            type: 'scatter',
+                            mode: 'lines+markers',
+                            marker: {color: 'purple'},
                         },
-                        {type: 'bar', x: dateArrayActive, y: activeMinutesArray, marker: { color: "rgba(6, 57, 219, 0.4)"}},
+                        {
+                            type: 'bar', 
+                            x: dateArrayActive, y: activeMinutesArray, marker: { color: "rgba(6, 57, 219, 0.4)"}},
                     ]}
                     layout={ {width: 420, height: 340, title: 'Active Minutes'} }
                 
@@ -97,11 +103,11 @@ const DataCharts = ({userName}) => {
             </div>
             )}
             <div id = "buttonLine">
-            <button className='buttonCl' onClick={()=>setToggle("steps")}><h2>Steps</h2></button>
-            <button className='buttonCl' onClick={()=>setToggle("weight")}><h2>Weight</h2></button>
-            <button className='buttonCl' onClick={()=>setToggle("activity")}><h2>Activity</h2></button>
-        </div>
-            </div> 
+                <button className='buttonCl' onClick={()=>setToggle("steps")}><h2>Steps</h2></button>
+                <button className='buttonCl' onClick={()=>setToggle("weight")}><h2>Weight</h2></button>
+                <button className='buttonCl' onClick={()=>setToggle("activity")}><h2>Activity</h2></button>
+            </div>
+        </div> 
   )
 }
 

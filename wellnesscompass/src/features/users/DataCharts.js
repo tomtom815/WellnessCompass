@@ -59,7 +59,7 @@ const DataCharts = ({userName}) => {
                             marker: { color: "rgba(6, 57, 219, 0.4)"}
                         },
                     ]}
-                    layout={ {width: 420, height: 340, title: 'Weight'} } />
+                    layout={ {width: 420, height: 340, title: 'Steps'} } />
             </div>)}
             {toggle == "weight" && (
             <div id= "weightGraph">

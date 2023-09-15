@@ -16,11 +16,6 @@ const UsersList = () => {
     //wait for response
         return <div>Loading...</div>
   
-     let todayDate = new Date();
-    let lastWeekDate = new Date(todayDate.getTime()-(60*60*24*7*1000))
-    const today = todayDate.toISOString().slice(0,10);
-    const lastWeek = lastWeekDate.toISOString().slice(0,10);
-    console.log(lastWeek)
     const userNameArray = usersResult.map((user =>
         user.username))
 

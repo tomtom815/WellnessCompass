@@ -34,9 +34,11 @@ const averageMetric = (averageMetricArray) => {
           user.value
 
     )) )
+
     
     if(!averageArray || averageArray.length == 0)
         return 0;
+        
     const sum = averageArray.reduce((accumulator, currentValue) => {
         return accumulator + currentValue;
     })
@@ -75,8 +77,8 @@ const userBMR = (userObject) => {
 //calories they burn sedentary daily
     const cArray = [
         userObject.age || " ",
-        userObject.weight[userObject.weight?.length-1]?.value || 0,
-        userObject.height[userObject.height?.length-1]?.value || 0,
+        parseInt(userObject.weight[userObject.weight?.length-1]?.value) || 0,
+        parseInt(userObject.height[userObject.height?.length-1]?.value) || 0,
         userObject.gender
     ] 
     if(cArray.includes(0) || cArray.includes(" "))

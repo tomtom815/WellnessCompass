@@ -20,7 +20,7 @@ function UpdateUserInfo(props) {
     const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]:{ "value": value, "date": formattedDate},
+      [name]:{ "value": parseInt(value), "date": formattedDate},
     });
     
   };

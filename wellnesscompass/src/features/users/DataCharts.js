@@ -38,63 +38,70 @@ const DataCharts = ({userName}) => {
         dateArrayActive[i] = activeMinutesData[i].date;
     }
   return (
-    <div id="dataContainer">
-                
-               {toggle == "steps" && ( <div id= "stepgraph">
-                    <Plot
-                        data={[
-                            {
+    <div id="dataContainer">        
+        {toggle == "steps" && ( <div id= "stepgraph">
+                <Plot
+                    data={[
+                        {
                             x: dateArraySteps,
                             y: stepDataArray,
                             type: 'scatter',
                             mode: 'lines+markers',
-                            marker: {color: 'green'},
-                            },
-                            {type: 'bar', x: dateArraySteps, y: stepDataArray, marker: { color: "rgba(6, 57, 219, 0.4)"}},
-                        ]}
-                        layout={ {width: 420, height: 340, title: 'Steps'} }
-                        config = {{responsive :true}}/>
-                </div>)}
-                {toggle == "weight" && (
-                <div id= "weightGraph">
-                    <Plot
-                        data={[
-                            {
-                            x: dateArrayWeight,
-                            y: weightDataArray,
-                            type: 'scatter',
-                            mode: 'lines+markers',
-                            marker: {color: 'green'},
-                            },
-                            {type: 'bar', x: dateArrayWeight, y: weightDataArray, marker: { color: "rgba(6, 57, 219, 0.4)"}},
-                        ]}
-                        layout={ {width: 420, height: 340, title: 'Weight'} } />
-                 </div>
-                )}
-                {toggle == "activity" && (
-                <div id= "activeMinutesGraph">
-                    <Plot
-                        data={[
-                            {
-                            x: dateArrayActive,
-                            y: activeMinutesArray,
-                            type: 'scatter',
-                            mode: 'lines+markers',
-                            marker: {color: 'green'},
-                            },
-                            {type: 'bar', x: dateArrayActive, y: activeMinutesArray, marker: { color: "rgba(6, 57, 219, 0.4)"}},
-                        ]}
-                        layout={ {width: 420, height: 340, title: 'Active Minutes'} }
-                       
-                        />
-                 </div>
-                )}
-                <div id = "buttonLine">
-                <button className='buttonCl' onClick={()=>setToggle("steps")}><h2>Steps</h2></button>
-                <button className='buttonCl' onClick={()=>setToggle("weight")}><h2>Weight</h2></button>
-                <button className='buttonCl' onClick={()=>setToggle("activity")}><h2>Activity</h2></button>
-           </div>
-                </div> 
+                            marker: {color: 'purple'},
+                        },
+                        {
+                            type: 'bar',
+                            x: dateArraySteps,
+                            y: stepDataArray, marker: { color: "rgba(6, 57, 219, 0.4)"}},
+                    ]}
+                    layout={ {width: 420, height: 340, title: 'Steps'} }
+                    config = {{responsive :true}}/>
+            </div>)}
+            {toggle == "weight" && (
+            <div id= "weightGraph">
+                <Plot
+                    data={[
+                        {
+                        x: dateArrayWeight,
+                        y: weightDataArray,
+                        type: 'scatter',
+                        mode: 'lines+markers',
+                        marker: {color: 'green'},
+                        },
+                        {
+                            type: 'bar',
+                            x: dateArrayWeight, 
+                            y: weightDataArray, 
+                            marker: { color: "rgba(6, 57, 219, 0.4)"}
+                        },
+                    ]}
+                    layout={ {width: 420, height: 340, title: 'Weight'} } />
+            </div>
+            )}
+            {toggle == "activity" && (
+            <div id= "activeMinutesGraph">
+                <Plot
+                    data={[
+                        {
+                        x: dateArrayActive,
+                        y: activeMinutesArray,
+                        type: 'scatter',
+                        mode: 'lines+markers',
+                        marker: {color: 'green'},
+                        },
+                        {type: 'bar', x: dateArrayActive, y: activeMinutesArray, marker: { color: "rgba(6, 57, 219, 0.4)"}},
+                    ]}
+                    layout={ {width: 420, height: 340, title: 'Active Minutes'} }
+                
+                    />
+            </div>
+            )}
+            <div id = "buttonLine">
+            <button className='buttonCl' onClick={()=>setToggle("steps")}><h2>Steps</h2></button>
+            <button className='buttonCl' onClick={()=>setToggle("weight")}><h2>Weight</h2></button>
+            <button className='buttonCl' onClick={()=>setToggle("activity")}><h2>Activity</h2></button>
+        </div>
+            </div> 
   )
 }
 

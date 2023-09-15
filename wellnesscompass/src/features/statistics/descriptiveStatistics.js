@@ -9,8 +9,14 @@ const dataPresent = (parameterArray) => {
 }
 
 //pre-condition: weight is in lb, height is in inches
-const BMI = (weight, height) => {
-    return weight / (height * height) * 703
+const BMI = (userObject) => {
+    const BMIArray = [
+        userObject.weight[userObject.weight?.length-1]?.value || 0,
+        userObject.height[userObject.height?.length-1]?.value || 0,
+    ] 
+    if(BMIArray.includes(0))
+        return 0
+    return (BMIArray[0] / (BMIArray[1] * BMIArray[1]) * 703).toFixed(2);
 }
 
 function compare( a, b ) {
@@ -47,9 +53,9 @@ const averageWeeklyMetric = (averageMetricArrayForWeek) => {
     const today = todayDate.toISOString().slice(0,10);
     const lastWeek = lastWeekDate.toISOString().slice(0,10);
     const thisWeekOnly = averageMetricArrayForWeek.filter((user)=>{
-        return user.date > lastWeek || user.date < today;
+        return user.date >= lastWeek || user.date <= today;
     })
-    const averageArray = averageMetricArrayForWeek.map((user => (
+    const averageArray = thisWeekOnly.map((user => (
         user.value
 
   )) )
@@ -64,7 +70,37 @@ const averageWeeklyMetric = (averageMetricArrayForWeek) => {
   return Math.round(sum/7);
 }
 
+const userBMR = (userObject) => {
+//calculates the user basal metobolic rate, ie how many
+//calories they burn sedentary daily
+    const cArray = [
+        userObject.age || " ",
+        userObject.weight[userObject.weight?.length-1]?.value || 0,
+        userObject.height[userObject.height?.length-1]?.value || 0,
+        userObject.gender
+    ] 
+    if(cArray.includes(0) || cArray.includes(" "))
+    //if user does not provide enough data,
+    //we cannot perform the calculation
+        return "N/A"
+    if(cArray[3] == "M"){
+        return (
+            //formula for male BMR
+            Math.round(88.362 + (13.397 * cArray[1] * 0.4546 /*conv lb to kg*/)
+            + (4.799 * cArray[2] * 2.54 /*conv inch to cm*/ )
+            - (5.67 * cArray[0]))
+        )
+    }
+    return (
+        //default is female since sex is female default at birth
+        //badum ts
+        Math.round(447.593 + (9.247 * cArray[1] * 0.4546 /*conv lb to kg*/)
+        + (3.098 * cArray[2] * 2.54 /*conv inch to cm*/ )
+        - (4.33 * cArray[0]))
+    )
+   
+}
 
 
 
-export {dataPresent, BMI, averageMetric, compare, averageWeeklyMetric}
+export {dataPresent, BMI, averageMetric, compare, averageWeeklyMetric, userBMR}

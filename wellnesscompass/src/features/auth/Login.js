@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect, useContext } from 'react';
 import AuthContext from '../../context/AuthProvider';
+import { useNavigate, redirect } from 'react-router-dom';
 
 import axios from '../../app/api/axios';
 const LOGIN_URL = '/auth';
@@ -40,6 +41,8 @@ const Login = () => {
             setUsername('');
             setPassword('');
             setSuccess(true);
+            localStorage.setItem("userID",username); //testing some things with successful login
+
         } catch (err) {
             if (!err?.response) {
                 setErrMsg('No Server Response');
@@ -52,7 +55,7 @@ const Login = () => {
             }
             errRef.current.focus();
         }
-
+    
     }
 
     return(

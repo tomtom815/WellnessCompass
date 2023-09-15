@@ -36,9 +36,9 @@ function UpdateUserInfo(props) {
 
       // Optionally reset the form or perform other actions after a successful update
       setFormData({
-        key1: '',
-        key2: '',
+        
       });
+      window. location. reload();
     } catch (error) {
       // Handle errors here
       console.error('Error updating resource:', error);

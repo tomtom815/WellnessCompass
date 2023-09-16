@@ -13,20 +13,9 @@ const DataCharts = ({userName}) => {
     const allUsers = JSON.parse(localStorage.getItem('usersData'));
     
     const userResult = JSON.parse(localStorage.getItem('userSingleData')); 
-    //const allUsers = Json.parse(localStorage.getItem('usersData'));
-    const stepDataArray = [];
-    const dateArraySteps = []
-    const weightDataArray = [];
-    const dateArrayWeight = []
-    const activeMinutesArray = [];
-    const dateArrayActive = []
-    //arrays to hold data for display
     const result = (userResult[0]);
     if(!result || !allUsers)
         return <div>Loading...</div>
-  
-
-    console.log(Object.keys(result))
     
     const chartDataSteps = userDataDisplay(result, Object.keys(result)[8]);
     const chartDataWeight = userDataDisplay(result, Object.keys(result)[5]);

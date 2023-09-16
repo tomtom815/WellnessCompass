@@ -103,6 +103,46 @@ const userBMR = (userObject) => {
    
 }
 
+const userDataDisplay = (result, userParamData)=>{
+    const dateArray = []
+    const valueArray = []
+    const paramData = result[`${userParamData}`];
+    for(let i =  0 ; i < paramData.length; i++){
+        dateArray[i] = paramData[i].date;
+        valueArray[i] = paramData[i].value;
 
+    }
+    console.log(valueArray)
+    return [dateArray, valueArray]
+}
 
-export {dataPresent, BMI, averageMetric, compare, averageWeeklyMetric, userBMR}
+const averagesDataDisplay = (specificData) =>{
+    const averageDateArray = []
+    const collectionOfValues = []
+    const averageValueArray = []
+    specificData.forEach((user => {
+        if(!specificData.includes(user.date))
+            averageDateArray.push(user.date)
+    }));
+    for(let k = 0; k < averageDateArray.length; k++){
+        collectionOfValues[k] = [];
+        for(let i = 0; i < averageDateArray.length; i++){
+            if(specificData[i].date == averageDateArray[k]){
+                const value = specificData[i].value;
+                collectionOfValues[k].push(value); 
+            }
+        }
+    }
+    for(let i = 0; i < collectionOfValues.length; i++){
+        const length = collectionOfValues[i].length;
+        let sum = 0;
+        for(let k = 0; k < collectionOfValues[i].length; k++){
+            sum = collectionOfValues[i][k];
+
+        }
+        averageValueArray.push(Math.round(sum/length));
+    }   
+    return [averageDateArray, averageValueArray]
+}
+
+export {dataPresent, BMI, averageMetric, compare, averageWeeklyMetric, userBMR, userDataDisplay, averagesDataDisplay}

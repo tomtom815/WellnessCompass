@@ -2,15 +2,18 @@ import React, { useState } from 'react'
 import { GetAllUsers } from '../../app/api/fetchAllUsers';
 import { GetOneUser } from '../../app/api/fetchOneUser';
 import Plot from 'react-plotly.js';
-//import plotGraph from '../statistics/displayStatistics';
+
+import { userDataDisplay, averagesDataDisplay } from '../statistics/descriptiveStatistics';
+
 
 const DataCharts = ({userName}) => {
     GetOneUser({userName})
     GetAllUsers();
-  
     const [toggle,setToggle] = useState(true);
+    const allUsers = JSON.parse(localStorage.getItem('usersData'));
+    
     const userResult = JSON.parse(localStorage.getItem('userSingleData')); 
-    //const allUsers = Json.parse(localStorage.getItem("usersData"));
+    //const allUsers = Json.parse(localStorage.getItem('usersData'));
     const stepDataArray = [];
     const dateArraySteps = []
     const weightDataArray = [];
@@ -19,67 +22,85 @@ const DataCharts = ({userName}) => {
     const dateArrayActive = []
     //arrays to hold data for display
     const result = (userResult[0]);
-    if(!result)
+    if(!result || !allUsers)
         return <div>Loading...</div>
-    const stepData = result.steps;
-    const weightData = result.weight
-    const activeMinutesData = result.activeMinutes
-    if(!stepData || !weightData || !activeMinutesData)
-        return  <div>Loading...</div>
-    for(let i = 0; i < stepData.length; i++){
-        //cannot get map to work for this for some reason so we're going with
-        //a regular for-loop to add data in
-        stepDataArray[i] = stepData[i].value;
-        dateArraySteps[i] = stepData[i].date;
-    }
-    for(let i = 0; i < weightData.length; i++){
-        weightDataArray[i] = weightData[i].value;
-        dateArrayWeight[i] = weightData[i].date;
-    }
-    for(let i = 0; i < activeMinutesData.length; i++){
-        activeMinutesArray[i] = activeMinutesData[i].value;
-        dateArrayActive[i] = activeMinutesData[i].date;
-    }
+  
+
+    console.log(Object.keys(result))
+    
+    const chartDataSteps = userDataDisplay(result, Object.keys(result)[8]);
+    const chartDataWeight = userDataDisplay(result, Object.keys(result)[5]);
+    const chartDataActive = userDataDisplay(result, Object.keys(result)[9]);
+    
+    const allTheSteps = allUsers.map((user =>
+       user.steps
+    )).flat(1)
+
+    const allTheActivity = allUsers.map((user =>
+        user.activeMinutes
+     )).flat(1)
+
+    const averageChartDataSteps = averagesDataDisplay(allTheSteps)
+    const averageChartDataActivity = averagesDataDisplay(allTheActivity);
+
+    
+
+
   return (
     <div id="dataContainer">        
         {toggle == "steps" && ( <div id= "stepgraph">
         <Plot
                     data={[
                         {
-                            x: dateArraySteps,
-                            y: stepDataArray,
-                            type: 'scatter',
+                            x: averageChartDataSteps[0],
+                            y: averageChartDataSteps[1],
+                            type: 'bar',
+                            name: 'Population',
                             mode: 'lines+markers',
                             marker: {color: 'purple'},
                         },
                         {
                             type: 'bar',
-                            x: dateArraySteps, 
-                            y: stepDataArray, 
+                            x:  chartDataSteps[0], 
+                            name: 'Personal',
+                            y:  chartDataSteps[1], 
                             marker: { color: "rgba(6, 57, 219, 0.4)"}
                         },
                     ]}
-                    layout={ {width: 420, height: 340, title: 'Steps'} } />
+                    layout={ 
+                        {
+                            width: 420, 
+                            height: 340, 
+                            title: 'Steps',
+                            xaxis: {
+                                title: {text: 'Date'} 
+                            },
+                            yaxis: {
+                                title: {text: 'Steps'} 
+                            }} } />
             </div>)}
             {toggle == "weight" && (
             <div id= "weightGraph">
                 <Plot
                     data={[
                         {
-                            x: dateArrayWeight,
-                            y: weightDataArray,
-                            type: 'scatter',
-                            mode: 'lines+markers',
-                            marker: {color: 'purple'},
-                        },
-                        {
                             type: 'bar',
-                            x: dateArrayWeight, 
-                            y: weightDataArray, 
+                            x: chartDataWeight[0], 
+                            y: chartDataWeight[1], 
                             marker: { color: "rgba(6, 57, 219, 0.4)"}
                         },
                     ]}
-                    layout={ {width: 420, height: 340, title: 'Weight'} } />
+                    layout={ 
+                        {
+                            width: 420, 
+                            height: 340, 
+                            title: 'Weight',
+                            xaxis: {
+                                title: {text: 'Date'} 
+                            },
+                            yaxis: {
+                                title: {text: 'Weight (lbs)'} 
+                            }} } />
             </div>
             )}
             {toggle == "activity" && (
@@ -87,17 +108,34 @@ const DataCharts = ({userName}) => {
                 <Plot
                     data={[
                         {
-                            x: dateArrayActive,
-                            y: activeMinutesArray,
-                            type: 'scatter',
+                            x: averageChartDataActivity[0],
+                            y: averageChartDataActivity[1],
+                            name: 'Population',
+                            type: 'bar',
                             mode: 'lines+markers',
-                            marker: {color: 'purple'},
+                            marker: {color: 'purple'}
                         },
                         {
                             type: 'bar', 
-                            x: dateArrayActive, y: activeMinutesArray, marker: { color: "rgba(6, 57, 219, 0.4)"}},
+                            x: chartDataActive[0],
+                            y: chartDataActive[1],
+                            name: 'Personal',
+                            marker: { color: "rgba(6, 57, 219, 0.4)"}},
                     ]}
-                    layout={ {width: 420, height: 340, title: 'Active Minutes'} }
+                    layout={ 
+                        {
+                            width: 420,
+                            height: 340, 
+                            title: 'Active Minutes',
+                            xaxis: {
+                                title: {text: 'Date'} 
+                            },
+                            yaxis: {
+                                title: {text: 'Active Minutes'} 
+                            }
+                        }
+                        
+                    }
                 
                     />
             </div>

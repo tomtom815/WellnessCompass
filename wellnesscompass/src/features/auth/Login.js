@@ -36,8 +36,8 @@ const Login = () => {
             console.log(JSON.stringify(response?.data));
 
             const accessToken = response?.data?.accessToken;
-            const roles = response?.data?.roles;
-            setAuth({ username, password, roles, accessToken });
+            // const roles = response?.data?.roles; **Didn't bother using roles in the back end because we don't have admin, editors, etc.
+            setAuth({ username, password, accessToken }); // If we used roles, they would be passed into setAuth as well
             setUsername('');
             setPassword('');
             setSuccess(true);

@@ -1,12 +1,13 @@
 
 import React, { useEffect, useState, useContext} from 'react'
-import axios from 'axios';
+import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 
 export const GetAllUsers = () =>{
-const [usersResult, setUsers] = useState([]);
+    const [usersResult, setUsers] = useState([]);
+    const axiosPrivate = useAxiosPrivate();
     const url = `http://localhost:3500/users/`
     useEffect(()=> {
-        axios.get(url)
+        axiosPrivate.get(url)
         .then(response => {
             setUsers(response.data) ;
         })

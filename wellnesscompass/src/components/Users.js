@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from '../app/api/axios';
 const Users = () => {
-  const [users, setUsers] = usetState();
+  const [users, setUsers] = useState();
 
   useEffect(() => {
     let isMounted = true;

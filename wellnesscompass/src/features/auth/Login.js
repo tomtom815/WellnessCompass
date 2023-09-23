@@ -1,6 +1,8 @@
 import { useRef, useState, useEffect } from 'react';
 import useAuth from '../../hooks/useAuth';
-import { useNavigate, redirect } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+
+import { redirect } from 'react-router-dom';
 
 import axios from '../../app/api/axios';
 const LOGIN_URL = '/auth';
@@ -8,13 +10,17 @@ const LOGIN_URL = '/auth';
 
 const Login = () => {
     const { setAuth } = useAuth();
+
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || "/";
+
     const usernameRef = useRef();
     const errRef = useRef();
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [errMsg, setErrMsg] = useState('');
-    const [success, setSuccess] = useState(false); // For tutorial only, will eventually route to new page upon successful login
 
     useEffect(() => {
         usernameRef.current.focus();
@@ -40,7 +46,8 @@ const Login = () => {
             setAuth({ username, password, accessToken }); // If we used roles, they would be passed into setAuth as well
             setUsername('');
             setPassword('');
-            setSuccess(true);
+            navigate(from, { replace: true });
+
             localStorage.setItem("userID",username); //testing some things with successful login
 
         } catch (err) {

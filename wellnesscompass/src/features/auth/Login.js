@@ -1,5 +1,5 @@
-import { useRef, useState, useEffect, useContext } from 'react';
-import AuthContext from '../../context/AuthProvider';
+import { useRef, useState, useEffect } from 'react';
+import useAuth from '../../hooks/useAuth';
 import { useNavigate, redirect } from 'react-router-dom';
 
 import axios from '../../app/api/axios';
@@ -7,7 +7,7 @@ const LOGIN_URL = '/auth';
 
 
 const Login = () => {
-    const { setAuth } = useContext(AuthContext);
+    const { setAuth } = useAuth();
     const usernameRef = useRef();
     const errRef = useRef();
 

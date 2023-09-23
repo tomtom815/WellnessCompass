@@ -1,10 +1,6 @@
 import { useLocation, Navigate, Outlet } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 
-import React from 'react';
-import { useAuth } from './AuthContext'; // Import the custom AuthContext hook for authentication.
-import { useLocation, Navigate, Outlet } from 'react-router-dom'; // Import necessary components from react-router-dom.
-
 // Define a functional component named RequireAuth.
 const RequireAuth = () => {
   // Use the custom AuthContext hook to access the auth status.

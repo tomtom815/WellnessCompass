@@ -13,7 +13,7 @@ const RequireAuth = () => {
   // If authenticated, render the child components nested inside the <RequireAuth> component (the <Outlet />).
   // If not authenticated, redirect to the login page ("/login") while preserving the current location (from: location).
   // The "replace" prop replaces the current history entry instead of adding a new one.
-  return auth?.user ? (
+  return auth?.username ? (
     <Outlet /> // Render the child components inside the outlet when authenticated.
   ) : (
     <Navigate to="/login" state={{ from: location }} replace /> // Redirect to the login page when not authenticated.

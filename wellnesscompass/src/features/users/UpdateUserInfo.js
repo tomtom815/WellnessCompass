@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 import SingleUser from './SingleUsersList';
 
 function UpdateUserInfo(props) {
+    const axiosPrivate = useAxiosPrivate();
     const today = new Date();
 
     const year = today.getFullYear();
@@ -29,7 +30,7 @@ function UpdateUserInfo(props) {
     e.preventDefault();
 
     try {
-      const response = await axios.patch('http://localhost:3500/users', formData);
+      const response = await axiosPrivate.patch('http://localhost:3500/users', formData);
 
       // Handle the response data or perform any necessary actions here
       console.log('Updated resource:', response.data);

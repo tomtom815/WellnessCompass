@@ -46,9 +46,9 @@ const Login = () => {
             setAuth({ username, password, accessToken }); // If we used roles, they would be passed into setAuth as well
             setUsername('');
             setPassword('');
-            navigate(from, { replace: true });
+            navigate('/users', { replace: true });
 
-            localStorage.setItem("userID",username); //testing some things with successful login
+            localStorage.setItem("userID", username); //testing some things with successful login
 
         } catch (err) {
             if (!err?.response) {

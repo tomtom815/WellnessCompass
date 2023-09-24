@@ -51,7 +51,7 @@ const Login = () => {
             // users page
             if (from === '/') {
                 navigate('/users/')
-            } else {
+            } else { // This branch will send user (once they've been authenticated) to the page they were trying to reach
                 navigate(from, { replace: true });
             }
 

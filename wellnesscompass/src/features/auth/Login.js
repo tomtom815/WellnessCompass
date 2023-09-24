@@ -46,9 +46,16 @@ const Login = () => {
             setAuth({ username, password, accessToken }); // If we used roles, they would be passed into setAuth as well
             setUsername('');
             setPassword('');
-            navigate('/users', { replace: true });
 
-            localStorage.setItem("userID", username); //testing some things with successful login
+            // Check if 'from' is the Register page. If so, navigate to the
+            // users page
+            if (from === '/') {
+                navigate('/users/')
+            } else {
+                navigate(from, { replace: true });
+            }
+
+            localStorage.setItem("userID",username); //testing some things with successful login
 
         } catch (err) {
             if (!err?.response) {

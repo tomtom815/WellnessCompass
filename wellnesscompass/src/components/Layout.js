@@ -2,9 +2,7 @@ import {Outlet} from 'react-router-dom';
 import React from 'react'
 
 const Layout = () => {
-  <main className="App">
-    return <Outlet />
-  </main>
+  return <Outlet />
 }
 
 export default Layout

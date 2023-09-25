@@ -2,7 +2,9 @@ import React, { useEffect, useState, useContext} from 'react'
 import axios from 'axios';
 
 import './userDisplays.css'
-import { averageMetric, averageWeeklyMetric, compare} from '../statistics/descriptiveStatistics';
+import { averageMetric, averageWeeklyMetric, compare } from '../statistics/descriptiveStatistics';
+
+import { Link } from 'react-router-dom';
 
 //to display user data for the front end. 
 
@@ -64,7 +66,9 @@ const UsersList = () => {
         {sortBySteps.map((user => (
         
             <tr>
-                <td><a href={`/users/${user.username}`}>{user.username}</a></td>
+                <td>
+                    <Link to={`/users/${user.username}`}>{user.username}</Link>
+                </td>
                 <td>{user.averageSteps}</td>
             </tr>
          
@@ -83,7 +87,9 @@ const UsersList = () => {
             {sortByMinutes.map((user => (
         
         <tr>
-            <a href={`/users/${user.username}`}><td>{user.username}</td></a>
+            <td>
+                <Link to={`/users/${user.username}`}>{user.username}</Link>
+            </td>
             <td>{user.averageActivity}</td>
         </tr>
      

@@ -48,8 +48,9 @@ const SingleUser = ({userName}) => {
             
           
            
-            <UpdateUserInfo result={result}/>
+            
             <DataCharts/>
+            <UpdateUserInfo result={result}/>
         </main>
         )
     }

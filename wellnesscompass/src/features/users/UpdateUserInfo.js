@@ -1,37 +1,41 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 import SingleUser from './SingleUsersList';
 import { FaPlus } from 'react-icons/fa';
+import axios from '../../app/api/axios';
+import useRefreshToken from '../../hooks/useRefreshToken';
 
-function UpdateUserInfo(props) {
-    const axiosPrivate = useAxiosPrivate();
-    const today = new Date();
+function UpdateUserInfo({ userData, setUserData, ...props }) {
+  const axiosPrivate = useAxiosPrivate();
+  const today = new Date();
+  const { refreshAccessToken } = useRefreshToken(); // Assuming your useRefreshToken hook provides this function
 
-    const year = today.getFullYear();
-    const month = String(today.getMonth() + 1).padStart(2, '0'); // Month is zero-based, so add 1
-    const day = String(today.getDate()).padStart(2, '0');
-    
-    const formattedDate = `${year}-${month}-${day}`;
-    const [showAdd, setShowAdd] = useState('hide');
-    const [formData, setFormData] = useState({
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, '0');
+  const day = String(today.getDate()).padStart(2, '0');
+
+  const formattedDate = `${year}-${month}-${day}`;
+  const [showAdd, setShowAdd] = useState('hide');
+  const [formData, setFormData] = useState({
     // Initialize the form data with default values if needed
     id: props.result._id,
     username: props.result.username,
   });
+
   const toggleAdd = () => {
     if (showAdd === 'hide') {
       setShowAdd('show');
     } else {
       setShowAdd('hide');
     }
-  }
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]:{ "value": parseInt(value), "date": formattedDate},
+      [name]: { value: parseInt(value), date: formattedDate },
     });
-    
   };
 
   const handlePatch = async (e) => {
@@ -44,13 +48,27 @@ function UpdateUserInfo(props) {
       console.log('Updated resource:', response.data);
 
       // Optionally reset the form or perform other actions after a successful update
-      setFormData({
-        
-      });
-      
+      document.getElementById('weight').value = '';
+      document.getElementById('height').value = '';
+      document.getElementById('steps').value = '';
+      document.getElementById('activeMinutes').value = '';
+     
     } catch (error) {
       // Handle errors here
       console.error('Error updating resource:', error);
+
+      // Check if the error is related to an expired token
+      if (error.response && error.response.status === 401) {
+        // Attempt to refresh the access token
+        try {
+          await refreshAccessToken(); // This should refresh the token
+          // Retry the request here or handle it as needed
+        } catch (refreshError) {
+          // Handle token refresh failure
+          console.error('Error refreshing token:', refreshError);
+          // You may want to log the user out or show an error message
+        }
+      }
     }
   };
 

@@ -7,12 +7,12 @@ import { Tooltip } from 'react-tooltip'
 import UpdateUserInfo from './UpdateUserInfo';
 
 
-
 const SingleUser = ({userName}) => {
     GetOneUser({userName})
     GetAllUsers();
     //const [toggle,setToggle] = useState(true);
     const userResult = JSON.parse(localStorage.getItem('userSingleData')); 
+    
     //const allUsers = JSON.parse(localStorage.getItem('usersData'));
     const result = (userResult[0]);
     if(!result){

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 import { useParams } from 'react-router-dom';
+import SingleUser from '../../features/users/SingleUsersList';
 
 export const GetOneUser = ({userName}) => {
     const [userResult, setUser] = useState([]);
@@ -23,4 +24,5 @@ export const GetOneUser = ({userName}) => {
     }
     const storeUser= JSON.stringify(userResult)
     localStorage.setItem('userSingleData', storeUser);
+    <SingleUser userData={userResult} setUserData={setUser}/>
 }

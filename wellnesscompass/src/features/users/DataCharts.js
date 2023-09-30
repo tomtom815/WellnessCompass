@@ -7,12 +7,11 @@ import { userDataDisplay, averagesDataDisplay } from '../statistics/descriptiveS
 
 
 const DataCharts = ({userName}) => {
-    GetOneUser({userName})
     GetAllUsers();
     const [toggle,setToggle] = useState(true);
     const allUsers = JSON.parse(localStorage.getItem('usersData'));
     
-    const userResult = JSON.parse(localStorage.getItem('userSingleData')); 
+    const userResult = GetOneUser({userName})
     const result = (userResult[0]);
     if(!result || !allUsers)
         return <div>Loading...</div>

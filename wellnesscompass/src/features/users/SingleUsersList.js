@@ -8,6 +8,7 @@ import UpdateUserInfo from './UpdateUserInfo';
 
 
 const SingleUser = ({userName}) => {
+
    const userResult = GetOneUser({userName})
     GetAllUsers();
     //const [toggle,setToggle] = useState(true);
@@ -54,5 +55,6 @@ const SingleUser = ({userName}) => {
         </main>
         )
     }
+    
 
 export default SingleUser;

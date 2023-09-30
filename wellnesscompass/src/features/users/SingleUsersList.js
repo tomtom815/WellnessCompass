@@ -8,10 +8,10 @@ import UpdateUserInfo from './UpdateUserInfo';
 
 
 const SingleUser = ({userName}) => {
-    GetOneUser({userName})
+   const userResult = GetOneUser({userName})
     GetAllUsers();
     //const [toggle,setToggle] = useState(true);
-    const userResult = JSON.parse(localStorage.getItem('userSingleData')); 
+    
     
     //const allUsers = JSON.parse(localStorage.getItem('usersData'));
     const result = (userResult[0]);

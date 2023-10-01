@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, {  useState } from 'react';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
-import SingleUser from './SingleUsersList';
+
 import { FaPlus } from 'react-icons/fa';
-import axios from '../../app/api/axios';
+
 import useRefreshToken from '../../hooks/useRefreshToken';
 
 function UpdateUserInfo({ userData, setUserData, ...props }) {

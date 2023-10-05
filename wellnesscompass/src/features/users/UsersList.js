@@ -4,13 +4,22 @@ import axios from 'axios';
 import './userDisplays.css'
 import { averageMetric, averageWeeklyMetric, compare } from '../statistics/descriptiveStatistics';
 
-import { Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+import useLogout from '../../hooks/useLogout';
 
 //to display user data for the front end. 
 
 import { GetAllUsers } from '../../app/api/fetchAllUsers';
 
 const UsersList = () => {
+    const navigate = useNavigate();
+    const logout = useLogout();
+
+    const signOut = async () => {
+        await logout();
+        navigate('/public');
+    }
+
     GetAllUsers();
     const usersResult = JSON.parse(localStorage.getItem('usersData'));
     
@@ -97,7 +106,8 @@ const UsersList = () => {
 
 )}
         </tbody>
-    </table>
+            </table>
+            <button onClick={signOut}>Sign Out</button>
     </main>
     )
 

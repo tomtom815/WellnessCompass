@@ -44,6 +44,7 @@ function UpdateUserInfo({ userData, setUserData, ...props }) {
     try {
       const response = await axiosPrivate.patch('http://localhost:3500/users', formData);
 
+      window.location.reload();
       // Handle the response data or perform any necessary actions here
       console.log('Updated resource:', response.data);
 

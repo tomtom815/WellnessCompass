@@ -1,6 +1,8 @@
 import axios from "../app/api/axios";
 import useAuth from "./useAuth";
 
+// This is a test comment
+
 const useLogout = () => {
   const { setAuth } = useAuth();
 

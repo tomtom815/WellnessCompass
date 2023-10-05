@@ -75,7 +75,7 @@ function UpdateUserInfo({ userData, setUserData, ...props }) {
 
   return (
     
-    <div class="updateUserInfo">
+    <div className="updateUserInfo">
       <button className="accordionBanner" onClick={() => toggleAdd()}>Add Info <FaPlus/></button>
       
         <form className={showAdd} onSubmit={handlePatch}>

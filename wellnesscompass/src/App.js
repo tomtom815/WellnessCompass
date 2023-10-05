@@ -2,6 +2,7 @@ import React from 'react';
 import Layout from './components/Layout';
 import Public from './components/Public';
 import RequireAuth from './components/RequireAuth';
+import PersistLogin from './components/PersistLogin';
 import Register from './features/auth/Register';
 import Login from './features/auth/Login';
 import UsersList from './features/users/UsersList';
@@ -18,12 +19,16 @@ function App() {
         <Route path="login" element={<Login />} />
         
         {/* We want to protect these routes */}
-        <Route element={<RequireAuth />}>
-          <Route path="users">
-              <Route index element={<UsersList />} />
+        <Route element={<PersistLogin />}>
+          <Route element={<RequireAuth />}>
+            <Route path="users">
+                <Route index element={<UsersList />} />
+            </Route>
           </Route>
-          <Route path="users/:user">
-              <Route index element={<SingleUser />} />
+          <Route element={<RequireAuth />}>
+            <Route path="users/:user">
+                <Route index element={<SingleUser />} />
+            </Route>
           </Route>
         </Route>
       </Route>

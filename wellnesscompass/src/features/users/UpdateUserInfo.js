@@ -38,6 +38,7 @@ function UpdateUserInfo({ result, onSubmission }) {
       const response = await axiosPrivate.patch('http://localhost:3500/users', formData);
       console.log('Updated resource:', response.data);
       onSubmission(); // Call the function to fetch updated user data
+      window.location.reload();
       document.getElementById('weight').value = '';
       document.getElementById('height').value = '';
       document.getElementById('steps').value = '';

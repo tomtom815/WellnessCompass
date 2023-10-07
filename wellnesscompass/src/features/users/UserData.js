@@ -9,13 +9,22 @@ import { Tooltip } from "react-tooltip";
 const UserData = ({ userResult, result, refreshFlag }) => {
   // Define a useEffect hook to listen for changes in refreshFlag
   useEffect(() => {
-    userResult[0] && console.log(userResult[0].firstName);
-    console.log('refreshFlag changed');
-  }, [refreshFlag]); // Specify refreshFlag as a dependency
+    userResult[0] &&
+      console.log(
+        userResult[0].weight[userResult[0].weight?.length - 1]?.value || 0
+      );
+    console.log('refreshFlag changed', refreshFlag);
+    console.log('userResult:', userResult);
+  }, [userResult, refreshFlag]); // Specify refreshFlag as a dependency
+
+  if (!Array.isArray(userResult)) {
+    // If userResult is not an array (initial load or error state), render loading or an error message
+    return <div>Loading...</div>; // You can replace this with an appropriate message
+  }
 
   return (
-   <div className="userInfoContainer">
-    {userResult.map((user) => (
+    <div key={refreshFlag} className="userInfoContainer">
+      {userResult.map((user) => (
         <div className="userInfo" key={user.id}>
           <section className="column-1">
             <h2>

@@ -1,27 +1,29 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 import { useParams } from 'react-router-dom';
-import SingleUser from '../../features/users/SingleUsersList';
 
-export const GetOneUser = ({userName}) => {
-    const [userResult, setUser] = useState([]);
-    const {user} = useParams()
-    const url = `http://localhost:3500/users/${user}`;
-    const axiosPrivate = useAxiosPrivate();
+export const GetOneUser = ({ userName }) => {
+  const { user } = useParams();
+  const url = `http://localhost:3500/users/${user}?_=${Date.now()}`;
+  const axiosPrivate = useAxiosPrivate();
+  const [userResult, setUserResult] = useState(null); // Initialize as null
 
+  useEffect(() => {
+    // ...
+    axiosPrivate.get(url, { params: userName })
+      .then((response) => {
+        console.log('response:', response.data)
+        setUserResult(response.data);
+      })
+      .catch((error) => {
+        console.error('Error fetching user data:', error);
+      });
+  }, [userName]);
 
-    useEffect(()=> {
-        axiosPrivate.get(url,
-            {params: userName})
-        .then(response => {
-            setUser(response.data) ;
-            
-        })
-    },[userName])
-    if(!userResult){
-        //await response
-            return <div>Loading...</div>
-    }
-  
-   return userResult;
-}
+  if (userResult === null) {
+    // Loading state, while waiting for response
+    return <div>Loading...</div>;
+  }
+
+  return userResult;
+};

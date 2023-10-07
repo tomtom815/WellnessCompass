@@ -1,14 +1,12 @@
-import React, {  useState } from 'react';
+import React, { useState } from 'react';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
-
 import { FaPlus } from 'react-icons/fa';
-
 import useRefreshToken from '../../hooks/useRefreshToken';
 
-function UpdateUserInfo({ userData, setUserData, ...props }) {
+function UpdateUserInfo({ result, onSubmission }) {
   const axiosPrivate = useAxiosPrivate();
   const today = new Date();
-  const { refreshAccessToken } = useRefreshToken(); // Assuming your useRefreshToken hook provides this function
+  const { refreshAccessToken } = useRefreshToken();
 
   const year = today.getFullYear();
   const month = String(today.getMonth() + 1).padStart(2, '0');
@@ -17,17 +15,12 @@ function UpdateUserInfo({ userData, setUserData, ...props }) {
   const formattedDate = `${year}-${month}-${day}`;
   const [showAdd, setShowAdd] = useState('hide');
   const [formData, setFormData] = useState({
-    // Initialize the form data with default values if needed
-    id: props.result._id,
-    username: props.result.username,
+    id: result._id,
+    username: result.username,
   });
 
   const toggleAdd = () => {
-    if (showAdd === 'hide') {
-      setShowAdd('show');
-    } else {
-      setShowAdd('hide');
-    }
+    setShowAdd(showAdd === 'hide' ? 'show' : 'hide');
   };
 
   const handleChange = (e) => {
@@ -43,31 +36,19 @@ function UpdateUserInfo({ userData, setUserData, ...props }) {
 
     try {
       const response = await axiosPrivate.patch('http://localhost:3500/users', formData);
-
-      window.location.reload();
-      // Handle the response data or perform any necessary actions here
       console.log('Updated resource:', response.data);
-
-      // Optionally reset the form or perform other actions after a successful update
+      onSubmission(); // Call the function to fetch updated user data
       document.getElementById('weight').value = '';
       document.getElementById('height').value = '';
       document.getElementById('steps').value = '';
       document.getElementById('activeMinutes').value = '';
-     
     } catch (error) {
-      // Handle errors here
       console.error('Error updating resource:', error);
-
-      // Check if the error is related to an expired token
       if (error.response && error.response.status === 401) {
-        // Attempt to refresh the access token
         try {
-          await refreshAccessToken(); // This should refresh the token
-          // Retry the request here or handle it as needed
+          await refreshAccessToken();
         } catch (refreshError) {
-          // Handle token refresh failure
           console.error('Error refreshing token:', refreshError);
-          // You may want to log the user out or show an error message
         }
       }
     }

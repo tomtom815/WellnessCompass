@@ -22,8 +22,6 @@ export const GetOneUser = ({userName}) => {
         //await response
             return <div>Loading...</div>
     }
-    /*const storeUser= JSON.stringify(userResult)
-    localStorage.setItem('userSingleData', storeUser);*/
-   // <SingleUser userData={userResult} setUserData={setUser}/>
+  
    return userResult;
 }

@@ -1,6 +1,7 @@
 import { useRef, useState, useEffect } from 'react';
 import useAuth from '../../hooks/useAuth';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
+import useLocalStorage from '../../hooks/useLocalStorage';
 
 import { redirect } from 'react-router-dom';
 
@@ -18,7 +19,7 @@ const Login = () => {
     const usernameRef = useRef();
     const errRef = useRef();
 
-    const [username, setUsername] = useState('');
+    const [username, setUsername] = useLocalStorage('username', '');//useState('');
     const [password, setPassword] = useState('');
     const [errMsg, setErrMsg] = useState('');
 

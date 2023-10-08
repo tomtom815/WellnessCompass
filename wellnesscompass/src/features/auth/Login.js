@@ -1,7 +1,8 @@
 import { useRef, useState, useEffect } from 'react';
 import useAuth from '../../hooks/useAuth';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import useLocalStorage from '../../hooks/useLocalStorage';
+import useInput from '../../hooks/useInput';
+import useToggle from '../../hooks/useToggle';
 
 import { redirect } from 'react-router-dom';
 
@@ -10,7 +11,7 @@ const LOGIN_URL = '/auth';
 
 
 const Login = () => {
-    const { setAuth, persist, setPersist } = useAuth();
+    const { setAuth } = useAuth();
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -19,9 +20,10 @@ const Login = () => {
     const usernameRef = useRef();
     const errRef = useRef();
 
-    const [username, setUsername] = useLocalStorage('username', '');//useState('');
+    const [username, resetUsername, usernameAttributes] = useInput('username');
     const [password, setPassword] = useState('');
     const [errMsg, setErrMsg] = useState('');
+    const [check, toggleCheck] = useToggle('persist', false);
 
     useEffect(() => {
         usernameRef.current.focus();
@@ -45,7 +47,8 @@ const Login = () => {
             const accessToken = response?.data?.accessToken;
             // const roles = response?.data?.roles; **Didn't bother using roles in the back end because we don't have admin, editors, etc.
             setAuth({ username, password, accessToken }); // If we used roles, they would be passed into setAuth as well
-            setUsername('');
+            //setUsername('');
+            resetUsername();
             setPassword('');
 
             // Check if 'from' is the Register page. If so, navigate to the
@@ -73,13 +76,13 @@ const Login = () => {
     
     }
 
-    const togglePersist = () => {
-        setPersist(prev => !prev);
-    }
+    // const togglePersist = () => {
+    //     setPersist(prev => !prev);
+    // }
 
-    useEffect(() => {
-        localStorage.setItem("persist", persist);
-    }, [persist]);
+    // useEffect(() => {
+    //     localStorage.setItem("persist", persist);
+    // }, [persist]);
 
     return(
         <section>
@@ -92,8 +95,7 @@ const Login = () => {
                     id="username"
                     ref={usernameRef}
                     autoComplete='off'
-                    onChange={(e) => setUsername(e.target.value)}
-                    value={username}
+                    {...usernameAttributes}
                     required
                 />
                 <label htmlFor='password'>Password:</label>
@@ -110,8 +112,8 @@ const Login = () => {
                     <input
                         type="checkbox"
                         id="persist"
-                        onChange={togglePersist}
-                        checked={persist} />
+                        onChange={toggleCheck}
+                        checked={check} />
                     <label htmlFor="persist">Trust This Device</label>
                 </div>
             </form>

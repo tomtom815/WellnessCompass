@@ -20,7 +20,7 @@ const Login = () => {
     const usernameRef = useRef();
     const errRef = useRef();
 
-    const [username, resetUsername, usernameAttributes] = useInput('username');
+    const [username, resetUsername, usernameAttributes] = useInput('username', '');
     const [password, setPassword] = useState('');
     const [errMsg, setErrMsg] = useState('');
     const [check, toggleCheck] = useToggle('persist', false);

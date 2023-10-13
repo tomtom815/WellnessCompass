@@ -22,10 +22,11 @@ const DataCharts = ({userName}) => {
     const chartDataActive = userDataDisplay(result, Object.keys(result)[9]);
     const chartWeeklyDataSteps = userDataWeeklyDisplay(result, Object.keys(result)[8]);
     const chartWeeklyDataActivity =userDataWeeklyDisplay(result, Object.keys(result)[9]);
-    const populationAverageSteps = weeklyPopulationAverage(allUsers,Object.keys(result)[8]);
-    const populationAverageActivity = weeklyPopulationAverage(allUsers, Object.keys(result)[9])
+    const populationAverageSteps = Math.round(weeklyPopulationAverage(allUsers,Object.keys(result)[8]));
+    const populationAverageActivity = Math.round(weeklyPopulationAverage(allUsers, Object.keys(result)[9]));
     const test2 = weeklyStandardDeviation(allUsers,Object.keys(result)[8]);
     
+    console.log()
     const allTheSteps = allUsers.map((user =>
        user.steps
     )).flat(1)
@@ -35,7 +36,7 @@ const DataCharts = ({userName}) => {
      )).flat(1)
    
      console.log("userweeklysteps");
-     console.log(chartWeeklyDataSteps[1]);
+     console.log(chartDataActive[0]);
 
     const userAverageSteps = getUserAverageForBreakDown(chartWeeklyDataSteps[1])
     const userAverageActivity = getUserAverageForBreakDown(chartWeeklyDataActivity[1])
@@ -114,7 +115,7 @@ const DataCharts = ({userName}) => {
         {toggle == "activity" && (<div id= "activeMinutesGraph">
             <Plot
                 data={[
-                    { x: averageChartDataActivity[0], y: averageChartDataActivity[1], name: 'Population',type: 'bar',mode: 'lines+markers',arker: {color: 'purple'}},{type: 'bar',  y: chartDataActive[1], name: 'Personal', marker: { color: "rgba(6, 57, 219, 0.4)"}}]}
+                    { x: averageChartDataActivity[0], y: averageChartDataActivity[1], name: 'Population',type: 'bar',mode: 'lines+markers',arker: {color: 'purple'}},{type: 'bar', x: chartDataActive[0], y: chartDataActive[1], name: 'Personal', marker: { color: "rgba(6, 57, 219, 0.4)"}}]}
                 layout={ {
                     width: 420, height: 340, title: 'Active Minutes',xaxis: {itle: {text: 'Date'} }, yaxis: {title: {text: 'Active Minutes'}}
                     }} />

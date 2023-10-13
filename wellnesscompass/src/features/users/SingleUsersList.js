@@ -17,7 +17,7 @@ const SingleUser = ({ userName }) => {
   };
 
   const userResult = GetOneUser({ userName });
-  GetAllUsers();
+  //GetAllUsers();
   const [userDataRefreshFlag, setUserDataRefreshFlag] = useState(0); // Step 1: Create a state variable with initial value 0
 
   const result = userResult[0];

@@ -31,7 +31,7 @@ const UsersList = () => {
 
   const userNameArray = usersResult.map((user) => user.username);
 
-  const averageStepsArray = usersResult.map((user) =>
+  let averageStepsArray = usersResult.map((user) =>
     averageWeeklyMetric(user.steps)
   );
   const averageActivityArray = usersResult.map((user) =>
@@ -61,7 +61,7 @@ const UsersList = () => {
 
   return (
     <main>
-      <table id="users">
+      <table class="users" id = "minutes">
         <thead>
           <tr>
             <th>Username</th>
@@ -79,7 +79,7 @@ const UsersList = () => {
           ))}
         </tbody>
       </table>
-      <table>
+      <table class = "users" id = "activity">
         <thead>
           <tr>
             <th>Username</th>

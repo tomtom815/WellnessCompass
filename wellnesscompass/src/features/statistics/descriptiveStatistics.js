@@ -49,14 +49,16 @@ const averageMetric = (averageMetricArray) => {
    
 }
 
-const averageWeeklyMetric = (averageMetricArrayForWeek) => {
+const averageWeeklyMetric = (parameterObjects) => {
     let todayDate = new Date();
     let lastWeekDate = new Date(todayDate.getTime()-(60*60*24*7*1000))
     const today = todayDate.toISOString().slice(0,10);
     const lastWeek = lastWeekDate.toISOString().slice(0,10);
-    const thisWeekOnly = averageMetricArrayForWeek.filter((user)=>{
+    console.log(lastWeek);
+    const thisWeekOnly = parameterObjects.filter((user)=>{
         return user.date >= lastWeek || user.date <= today;
     })
+    console.log(thisWeekOnly)
     const averageArray = thisWeekOnly.map((user => (
         user.value
 
@@ -112,10 +114,73 @@ const userDataDisplay = (result, userParamData)=>{
         valueArray[i] = paramData[i].value;
 
     }
-    console.log(valueArray)
+ 
     return [dateArray, valueArray]
 }
 
+const userDataWeeklyDisplay = (result, userParamData)=>{
+    let todayDate = new Date();
+    let lastWeekDate = new Date(todayDate.getTime()-(60*60*24*7*1000))
+    const today = todayDate.toISOString().slice(0,10);
+    const lastWeek = lastWeekDate.toISOString().slice(0,10);
+    const dateArray = []
+    const valueArray = []
+  
+    const paramData = result[`${userParamData}`];
+    let count = 0;
+    for(let i =  0 ; i < paramData.length; i++){
+        if(paramData[i].date >= lastWeek && paramData[i].date <= today){
+            dateArray[count] = paramData[i].date;
+            valueArray[count] = paramData[i].value;
+            count++;
+        }
+    }
+    return [dateArray, valueArray]
+}
+
+const weeklyPopulationAverage = (result, usersParamData) => {
+    let todayDate = new Date();
+    let lastWeekDate = new Date(todayDate.getTime()-(60*60*24*7*1000))
+    const today = todayDate.toISOString().slice(0,10);
+    const lastWeek = lastWeekDate.toISOString().slice(0,10);
+    const paramArray = result.map(user => user[`${usersParamData}`]).flat();
+   const weeklyParamArray = paramArray.filter((param)=> param.date >= lastWeek && param.date <= today).map(user => user.value)
+   if(weeklyParamArray.length == 0)
+    return 0;
+    const sum = weeklyParamArray.reduce((accumulator, currentValue) => {
+        return accumulator + currentValue
+    })
+    return sum / weeklyParamArray.length;
+}
+
+const weeklyStandardDeviation = (result, usersParamData) => {
+    let todayDate = new Date();
+    let lastWeekDate = new Date(todayDate.getTime()-(60*60*24*7*1000))
+    const today = todayDate.toISOString().slice(0,10);
+    const lastWeek = lastWeekDate.toISOString().slice(0,10);
+    const paramArray = result.map(user => user[`${usersParamData}`]).flat();
+    const weeklyParamArray = paramArray.filter((param)=> param.date >= lastWeek && param.date <= today).map(user => user.value)
+    const weeklyAverageOfParam = weeklyPopulationAverage(result, usersParamData);
+    let p1 = 0;
+    for(let i = 0; i < weeklyParamArray.length; i++){
+        p1 += Math.pow((weeklyParamArray[i] - weeklyAverageOfParam),2);
+    }
+    
+    p1 /= (weeklyParamArray.length-1);
+    p1= Math.sqrt(p1);
+    
+    return p1;
+
+}
+
+const greaterOrLessThan =(userData, populationData) => {
+    if(userData> populationData)
+        return [true, "You are above average!"]
+    else if(userData == populationData)
+        return [true, "You have met the average!"]
+    else    
+        return [false, "You are below average."]
+}
 const averagesDataDisplay = (specificData) =>{
     const averageDateArray = []
     const collectionOfValues = []
@@ -145,4 +210,15 @@ const averagesDataDisplay = (specificData) =>{
     return [averageDateArray, averageValueArray]
 }
 
-export {dataPresent, BMI, averageMetric, compare, averageWeeklyMetric, userBMR, userDataDisplay, averagesDataDisplay}
+const getUserAverageForBreakDown = (array)=>{
+    console.log("passed to function is")
+    console.log(array);
+    if(array.length == 0)
+        return 0;
+   return Math.round(array.reduce((accumulator, currentValue) => {
+        return accumulator + currentValue
+    })/array.length);
+    
+}
+
+export {getUserAverageForBreakDown, dataPresent, BMI, averageMetric, compare, averageWeeklyMetric, userBMR, userDataDisplay, averagesDataDisplay, userDataWeeklyDisplay, weeklyPopulationAverage, weeklyStandardDeviation, greaterOrLessThan}

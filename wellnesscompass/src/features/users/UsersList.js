@@ -65,7 +65,7 @@ const UsersList = () => {
         <thead>
           <tr>
             <th>Username</th>
-            <th>Average Weekly Steps</th>
+            <th>Average Daily Steps</th>
           </tr>
         </thead>
         <tbody>
@@ -83,7 +83,7 @@ const UsersList = () => {
         <thead>
           <tr>
             <th>Username</th>
-            <th>Average Weekly Active Minutes</th>
+            <th>Average Daily Active Minutes</th>
           </tr>
         </thead>
         <tbody>

@@ -25,8 +25,7 @@ const DataCharts = ({userName}) => {
     const populationAverageSteps = Math.round(weeklyPopulationAverage(allUsers,Object.keys(result)[8]));
     const populationAverageActivity = Math.round(weeklyPopulationAverage(allUsers, Object.keys(result)[9]));
     const test2 = weeklyStandardDeviation(allUsers,Object.keys(result)[8]);
-    
-    console.log()
+    console.log(test2)
     const allTheSteps = allUsers.map((user =>
        user.steps
     )).flat(1)
@@ -34,9 +33,7 @@ const DataCharts = ({userName}) => {
     const allTheActivity = allUsers.map((user =>
         user.activeMinutes
      )).flat(1)
-   
-     console.log("userweeklysteps");
-     console.log(chartDataActive[0]);
+  
 
     const userAverageSteps = getUserAverageForBreakDown(chartWeeklyDataSteps[1])
     const userAverageActivity = getUserAverageForBreakDown(chartWeeklyDataActivity[1])
@@ -71,7 +68,7 @@ const DataCharts = ({userName}) => {
             data={[
                 {x: chartWeeklyDataActivity[0], y: chartWeeklyDataActivity[1], type: 'bar', name: 'Weekly Activity', mode: 'lines+markers', marker: {color: 'purple'}}]}
             layout={ 
-                { width: 420, height: 340,  title: 'Steps', xaxis: {title: {text: 'Date'} }, yaxis: {title: {text: 'Weekly Steps'} }} } />
+                { width: 420, height: 340,  title: 'Active Minutes', xaxis: {title: {text: 'Date'} }, yaxis: {title: {text: 'Weekly Active Minutes'} }} } />
                <div className = "weeklyBreakDown">
                <p>You have an average of {userAverageActivity} active minutes this week.</p>
                <p>The average total active minutes for this week is {populationAverageActivity}.</p>

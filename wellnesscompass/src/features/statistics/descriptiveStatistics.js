@@ -146,7 +146,7 @@ const weeklyPopulationAverage = (result, usersParamData) => {
     const paramArray = result.map(user => user[`${usersParamData}`]).flat();
    const weeklyParamArray = paramArray.filter((param)=> param.date >= lastWeek && param.date <= today).map(user => user.value)
    if(weeklyParamArray.length == 0)
-    return 0;
+        return 0;
     const sum = weeklyParamArray.reduce((accumulator, currentValue) => {
         return accumulator + currentValue
     })

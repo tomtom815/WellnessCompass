@@ -16,6 +16,5 @@ export const GetAllUsers = () =>{
     if(!usersResult)
     //wait for response
         return <div>Loading...</div>
-    const storeUsers = JSON.stringify(usersResult)
-    localStorage.setItem('usersData', storeUsers);
+    return usersResult;
 }

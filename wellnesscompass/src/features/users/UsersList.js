@@ -22,12 +22,12 @@ const UsersList = () => {
     navigate("/login");
   };
 
-  GetAllUsers();
-  const usersResult = JSON.parse(localStorage.getItem("usersData"));
+  
+  const usersResult = GetAllUsers();
 
   if (!usersResult)
     //wait for response
-    return <div>Loading...</div>;
+    return <div>Loading...?</div>;
 
   const userNameArray = usersResult.map((user) => user.username);
 

@@ -7,12 +7,11 @@ import { averageMetric, userDataDisplay, averagesDataDisplay, userDataWeeklyDisp
 
 
 const DataCharts = ({userName}) => {
-    GetAllUsers();
+
 
     const [weeklyToggle, setWeeklyToggle] = useState(true);
     const [toggle,setToggle] = useState(true);
-    const allUsers = JSON.parse(localStorage.getItem('usersData'));
-    
+    const allUsers =  GetAllUsers();
     const userResult = GetOneUser({userName})
     const result = (userResult[0]);
     if(!result || !allUsers)

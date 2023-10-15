@@ -31,6 +31,27 @@ function UpdateUserInfo({ result, onSubmission }) {
     });
   };
 
+  const validateInput = (e) => {
+    const { name, value } = e.target;
+
+    // Check if the input value is empty
+    if (value === '') {
+      return;
+    }
+
+    const intValue = parseInt(value);
+
+    if (isNaN(intValue)) {
+      alert('Please enter an integer.');
+    } else {
+      if (name === 'weight' && (intValue < 50 || intValue > 500)) {
+        alert('Weight should be between 50 and 500 lbs.');
+      } else if (name === 'height' && (intValue < 36 || intValue > 90)) {
+        alert('Height should be between 36 and 90 inches.');
+      }
+    }
+  };
+
   const handlePatch = async (e) => {
     e.preventDefault();
 
@@ -38,7 +59,6 @@ function UpdateUserInfo({ result, onSubmission }) {
       const response = await axiosPrivate.patch('http://localhost:3500/users', formData);
       console.log('Updated resource:', response.data);
       onSubmission(); // Call the function to fetch updated user data
-      //window.location.reload();
       document.getElementById('weight').value = '';
       document.getElementById('height').value = '';
       document.getElementById('steps').value = '';
@@ -56,11 +76,10 @@ function UpdateUserInfo({ result, onSubmission }) {
   };
 
   return (
-    
     <div className="updateUserInfo">
       <button className="accordionBanner" onClick={() => toggleAdd()}>Add Info <FaPlus/></button>
-      
-        <form className={showAdd} onSubmit={handlePatch}>
+
+      <form className={showAdd} onSubmit={handlePatch}>
         <div>
           <label htmlFor="weight">Add New Weight:</label>
           <input
@@ -68,6 +87,7 @@ function UpdateUserInfo({ result, onSubmission }) {
             id="weight"
             name="weight"
             onChange={handleChange}
+            onBlur={validateInput}
           />
         </div>
         <div>
@@ -76,8 +96,8 @@ function UpdateUserInfo({ result, onSubmission }) {
             type="integer"
             id="height"
             name="height"
-            
             onChange={handleChange}
+            onBlur={validateInput}
           />
         </div>
         <div>
@@ -86,8 +106,8 @@ function UpdateUserInfo({ result, onSubmission }) {
             type="integer"
             id="steps"
             name="steps"
-            
             onChange={handleChange}
+            onBlur={validateInput}
           />
         </div>
         <div>
@@ -96,13 +116,12 @@ function UpdateUserInfo({ result, onSubmission }) {
             type="integer"
             id="activeMinutes"
             name="activeMinutes"
-           
             onChange={handleChange}
+            onBlur={validateInput}
           />
         </div>
         <button type="submit">Update</button>
       </form>
-      
     </div>
   );
 }

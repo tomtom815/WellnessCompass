@@ -28,10 +28,10 @@
 #activity{
     float: right;
 }
+
 #dataContainer{
-    display:grid;
-    grid-column: 1fr 1fr;
-    column-gap: 5em;
+    display: flex;
+    
     align-items:center;
     justify-content: space-evenly;
     text-align:center;
@@ -47,7 +47,7 @@
 
 
 .weeklyDataDisplay{
-    background-color:  #584ba1;
+  
     margin-top: 0px;
     padding: 5px 20px;
 }
@@ -60,23 +60,43 @@
     float:right;
     text-align:left;
     margin: 10px;
+    padding:10px;
 }
 #dataLifeTimeContainer{
-    padding: 10px;
+    
     background-color: #180e51;
-    margin:auto;
-    text-align: center;
-    width: 440px;
-    height: auto;
-    min-height:55px;
+    margin-top: 0px;
+    padding: 5px 20px;
+    width: 100%;
+    height:650px;
 
-   
 }
-#dataLifeTimeContainer button.buttonCl{
+
+#dataWeeklyContainer{
+    
+    background-color: #6955d9;
+    margin-top: 0px;
+    padding: 5px 20px;
+    width: 100%;
+    height:650px;
+
+}
+
+.testDataContainer{
+    display:grid;
+    grid-column: 1fr 1fr 1fr 1fr;
+    column-gap: 5em;
+    align-items:center;
+    justify-content: space-evenly;
+    text-align:center;
+    background-color: #a09bb9;
+}
+
+#dataLifeTimeContainer #dataWeeklyContainer button.buttonCl{
     margin-top: 0px;
     padding: 5px 20px;
 }
-#dataLifeTimeContainer #buttonLine{
+#dataLifeTimeContainer #dataWeeklyContainer #buttonLine{
     display:flex;
     flex-direction: row;
     justify-content: space-evenly;

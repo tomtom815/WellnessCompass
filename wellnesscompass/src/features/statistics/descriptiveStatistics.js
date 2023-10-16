@@ -45,9 +45,19 @@ const averageMetric = (averageMetricArray) => {
 
     /*const stats = new Statistics(averageArray);*/
     return Math.round(sum/averageArray.length);
-  
-   
+    
 }
+
+const simpleSum = (array)=> {
+    if(array.length == 0)
+        return 0
+    let sum = 0
+    for(let i = 0; i < array.length; i++){
+        sum += array[i];
+    }
+    return sum;
+}
+
 
 const averageWeeklyMetric = (parameterObjects) => {
     let todayDate = new Date();
@@ -221,4 +231,4 @@ const getUserAverageForBreakDown = (array)=>{
     
 }
 
-export {getUserAverageForBreakDown, dataPresent, BMI, averageMetric, compare, averageWeeklyMetric, userBMR, userDataDisplay, averagesDataDisplay, userDataWeeklyDisplay, weeklyPopulationAverage, weeklyStandardDeviation, greaterOrLessThan}
+export {simpleSum, getUserAverageForBreakDown, dataPresent, BMI, averageMetric, compare, averageWeeklyMetric, userBMR, userDataDisplay, averagesDataDisplay, userDataWeeklyDisplay, weeklyPopulationAverage, weeklyStandardDeviation, greaterOrLessThan}

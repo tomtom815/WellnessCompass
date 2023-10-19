@@ -133,15 +133,20 @@ const userDataWeeklyDisplay = (result, userParamData)=>{
     let lastWeekDate = new Date(todayDate.getTime()-(60*60*24*7*1000))
     const today = todayDate.toISOString().slice(0,10);
     const lastWeek = lastWeekDate.toISOString().slice(0,10);
-    const dateArray = []
-    const valueArray = []
-  
+    const dateArray = [];
+    const valueArray = [];
+    console.log(today);
     const paramData = result[`${userParamData}`];
     let count = 0;
     for(let i =  0 ; i < paramData.length; i++){
+       
+        console.log(paramData[i].date + " is " + paramData[i].date >= lastWeek)
+        console.log(paramData[i].date + " is " + paramData[i].date <= today)
         if(paramData[i].date >= lastWeek && paramData[i].date <= today){
+            
             dateArray[count] = paramData[i].date;
             valueArray[count] = paramData[i].value;
+           
             count++;
         }
     }

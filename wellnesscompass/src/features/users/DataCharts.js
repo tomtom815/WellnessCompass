@@ -17,13 +17,14 @@ const DataCharts = ({userName}) => {
     if(!result || !allUsers)
         return <div>Loading...</div>
    
-    const chartDataSteps = userDataDisplay(result, Object.keys(result)[8]);
-    const chartDataWeight = userDataDisplay(result, Object.keys(result)[5]);
-    const chartDataActive = userDataDisplay(result, Object.keys(result)[9]);
-    const chartWeeklyDataSteps = userDataWeeklyDisplay(result, Object.keys(result)[8]);
-    const chartWeeklyDataActivity =userDataWeeklyDisplay(result, Object.keys(result)[9]);
-    const populationAverageSteps = Math.round(weeklyPopulationAverage(allUsers,Object.keys(result)[8]));
-    const populationAverageActivity = Math.round(weeklyPopulationAverage(allUsers, Object.keys(result)[9]));
+    console.log(Object.keys(result));
+    const chartDataSteps = userDataDisplay(result, Object.keys(result)[9]);
+    const chartDataWeight = userDataDisplay(result, Object.keys(result)[6]);
+    const chartDataActive = userDataDisplay(result, Object.keys(result)[10]);
+    const chartWeeklyDataSteps = userDataWeeklyDisplay(result, Object.keys(result)[9]);
+    const chartWeeklyDataActivity =userDataWeeklyDisplay(result, Object.keys(result)[10]);
+    const populationAverageSteps = Math.round(weeklyPopulationAverage(allUsers,Object.keys(result)[9]));
+    const populationAverageActivity = Math.round(weeklyPopulationAverage(allUsers, Object.keys(result)[10]));
     const test2 = weeklyStandardDeviation(allUsers,Object.keys(result)[8]);
     console.log(test2)
     const allTheSteps = allUsers.map((user =>
@@ -33,7 +34,9 @@ const DataCharts = ({userName}) => {
     const allTheActivity = allUsers.map((user =>
         user.activeMinutes
      )).flat(1)
-  
+    
+     console.log("Weekly data steps is ")
+     console.log(chartWeeklyDataSteps)
 
     const userAverageSteps = getUserAverageForBreakDown(chartWeeklyDataSteps[1])
     const userAverageActivity = getUserAverageForBreakDown(chartWeeklyDataActivity[1])

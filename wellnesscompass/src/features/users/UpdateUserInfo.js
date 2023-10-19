@@ -48,6 +48,8 @@ function UpdateUserInfo({ result, onSubmission }) {
         alert('Weight should be between 50 and 500 lbs.');
       } else if (name === 'height' && (intValue < 36 || intValue > 90)) {
         alert('Height should be between 36 and 90 inches.');
+      }else if (name === 'hoursSlept' && (intValue < 2 || intValue > 16)) {
+        alert('Hours slept should be between 2 and 16 hours');
       }
     }
   };
@@ -63,6 +65,7 @@ function UpdateUserInfo({ result, onSubmission }) {
       document.getElementById('height').value = '';
       document.getElementById('steps').value = '';
       document.getElementById('activeMinutes').value = '';
+      document.getElementById('hoursSlept').value = '';
     } catch (error) {
       console.error('Error updating resource:', error);
       if (error.response && error.response.status === 401) {
@@ -116,6 +119,16 @@ function UpdateUserInfo({ result, onSubmission }) {
             type="integer"
             id="activeMinutes"
             name="activeMinutes"
+            onChange={handleChange}
+            onBlur={validateInput}
+          />
+        </div>
+        <div>
+          <label htmlFor="hoursSlept">Add Hours Slept:</label>
+          <input
+            type="integer"
+            id="hoursSlept"
+            name="hoursSlept"
             onChange={handleChange}
             onBlur={validateInput}
           />

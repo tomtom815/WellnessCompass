@@ -16,14 +16,15 @@ const DataCharts = ({userName}) => {
     const result = (userResult[0]);
     if(!result || !allUsers)
         return <div>Loading...</div>
-    
-    const chartDataSteps = userDataDisplay(result, Object.keys(result)[9]);
-    const chartDataWeight = userDataDisplay(result, Object.keys(result)[6]);
-    const chartDataActive = userDataDisplay(result, Object.keys(result)[10]);
-    const chartWeeklyDataSteps = userDataWeeklyDisplay(result, Object.keys(result)[9]);
-    const chartWeeklyDataActivity =userDataWeeklyDisplay(result, Object.keys(result)[10]);
-    const populationAverageSteps = Math.round(weeklyPopulationAverage(allUsers,Object.keys(result)[9]));
-    const populationAverageActivity = Math.round(weeklyPopulationAverage(allUsers, Object.keys(result)[10]));
+   
+    const chartDataSteps = userDataDisplay(result, "steps");
+    console.log('steps')
+    const chartDataWeight = userDataDisplay(result, "weight");
+    const chartDataActive = userDataDisplay(result, "activeMinutes");
+    const chartWeeklyDataSteps = userDataWeeklyDisplay(result, "steps");
+    const chartWeeklyDataActivity =userDataWeeklyDisplay(result, "activeMinutes");
+    const populationAverageSteps = Math.round(weeklyPopulationAverage(allUsers,"steps"));
+    const populationAverageActivity = Math.round(weeklyPopulationAverage(allUsers, "activeMinutes"));
     
     const allTheSteps = allUsers.map((user =>
        user.steps

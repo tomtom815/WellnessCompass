@@ -118,8 +118,11 @@ const userBMR = (userObject) => {
 const userDataDisplay = (result, userParamData)=>{
     const dateArray = []
     const valueArray = []
+
     const paramData = result[`${userParamData}`];
+    console.log(paramData);
     for(let i =  0 ; i < paramData.length; i++){
+        console.log(paramData[i].value);
         dateArray[i] = paramData[i].date;
         valueArray[i] = paramData[i].value;
 

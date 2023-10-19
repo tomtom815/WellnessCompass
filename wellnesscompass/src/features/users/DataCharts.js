@@ -16,8 +16,7 @@ const DataCharts = ({userName}) => {
     const result = (userResult[0]);
     if(!result || !allUsers)
         return <div>Loading...</div>
-   
-    console.log(Object.keys(result));
+    
     const chartDataSteps = userDataDisplay(result, Object.keys(result)[9]);
     const chartDataWeight = userDataDisplay(result, Object.keys(result)[6]);
     const chartDataActive = userDataDisplay(result, Object.keys(result)[10]);
@@ -25,8 +24,7 @@ const DataCharts = ({userName}) => {
     const chartWeeklyDataActivity =userDataWeeklyDisplay(result, Object.keys(result)[10]);
     const populationAverageSteps = Math.round(weeklyPopulationAverage(allUsers,Object.keys(result)[9]));
     const populationAverageActivity = Math.round(weeklyPopulationAverage(allUsers, Object.keys(result)[10]));
-    const test2 = weeklyStandardDeviation(allUsers,Object.keys(result)[8]);
-    console.log(test2)
+    
     const allTheSteps = allUsers.map((user =>
        user.steps
     )).flat(1)
@@ -36,7 +34,7 @@ const DataCharts = ({userName}) => {
      )).flat(1)
     
      console.log("Weekly data steps is ")
-     console.log(chartWeeklyDataSteps)
+     console.log(Object.keys(result))
 
     const userAverageSteps = getUserAverageForBreakDown(chartWeeklyDataSteps[1])
     const userAverageActivity = getUserAverageForBreakDown(chartWeeklyDataActivity[1])
@@ -49,7 +47,13 @@ const DataCharts = ({userName}) => {
 
 
   return (
-    <div id="dataContainer">   
+    <div>
+        <div id = "todayDataContainer">
+           
+        </div>
+        <div id="dataSubContainer">  
+        <div>
+        </div>
         <div id = "dataWeeklyContainer">
             <br></br>
             <h1>Weekly Metrics</h1>
@@ -148,6 +152,8 @@ const DataCharts = ({userName}) => {
         
        
         </div> 
+    </div>
+    
         
         
         

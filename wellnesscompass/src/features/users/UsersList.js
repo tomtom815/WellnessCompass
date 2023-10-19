@@ -61,11 +61,12 @@ const UsersList = () => {
 
   return (
     <main>
+      <h1>Weekly Leaderboard</h1>
       <table class="users" id = "minutes">
         <thead>
           <tr>
             <th>Username</th>
-            <th>Average Daily Steps</th>
+            <th>Average Weekly Steps</th>
           </tr>
         </thead>
         <tbody>
@@ -83,7 +84,7 @@ const UsersList = () => {
         <thead>
           <tr>
             <th>Username</th>
-            <th>Average Daily Active Minutes</th>
+            <th>Average Weekly Active Minutes</th>
           </tr>
         </thead>
         <tbody>

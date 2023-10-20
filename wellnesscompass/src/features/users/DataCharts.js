@@ -195,7 +195,7 @@ const DataCharts = ({userName}) => {
                 {averageLifeTimeActivity/60} hours a day active.
                 </p>
                 <p>
-                {chartWeeklyDataSleep[1]} hours a day sleeping.
+                {getUserAverageForBreakDown(chartWeeklyDataSleep[1])} hours a day sleeping.
                 </p>
                 <p>
                 {Math.round((24-averageLifeTimeActivity/60-getUserAverageForBreakDown(chartWeeklyDataSleep[1])) * 100)/100} hours a day doing other activities.

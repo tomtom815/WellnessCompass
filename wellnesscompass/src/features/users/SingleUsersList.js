@@ -34,6 +34,7 @@ const SingleUser = ({ userName }) => {
     <main>
       <UserData userResult={userResult} result={result} refreshFlag={userDataRefreshFlag} /> 
       <DataCharts />
+      <br></br>
       <UpdateUserInfo result={result} onSubmission={handleUserDataRefresh} /> 
       <button onClick={signOut}>Sign Out</button>
     </main>

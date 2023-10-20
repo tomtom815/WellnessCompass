@@ -48,6 +48,25 @@ const averageMetric = (averageMetricArray) => {
     
 }
 
+const todayStats = (object) => {
+    const array = [];
+    const todayDate = new Date();
+
+    const year = todayDate.getFullYear();
+    const month = String(todayDate.getMonth() + 1).padStart(2, '0');
+    const day = String(todayDate.getDate()).padStart(2, '0');
+    const today = `${year}-${month}-${day}`;
+    array.push(today);
+    if(object.steps.length == 0 || object.steps[object.steps.length-1]?.date !==today)
+        array.push(0);
+    else
+        array.push(object.steps[object.steps.length-1].value)
+    if(object.activeMinutes.length == 0 || object.activeMinutes[object.activeMinutes.length-1]?.date !==today)
+        array.push(0);
+    else
+        array.push(object.activeMinutes[object.activeMinutes.length-1].value)
+    return array;
+}
 const simpleSum = (array)=> {
     if(array.length == 0)
         return 0
@@ -60,15 +79,20 @@ const simpleSum = (array)=> {
 
 
 const averageWeeklyMetric = (parameterObjects) => {
-    let todayDate = new Date();
-    let lastWeekDate = new Date(todayDate.getTime()-(60*60*24*7*1000))
-    const today = todayDate.toISOString().slice(0,10);
-    const lastWeek = lastWeekDate.toISOString().slice(0,10);
-    console.log(lastWeek);
+    const todayDate = new Date();
+    const year = todayDate.getFullYear();
+    const month = String(todayDate.getMonth() + 1).padStart(2, '0');
+    const day = String(todayDate.getDate()).padStart(2, '0');
+    const today = `${year}-${month}-${day}`;
+    const lastWeekDate = new Date(todayDate.getTime()-(60*60*24*7*1000))
+    const lastWeekYear = lastWeekDate.getFullYear();
+    const lastWeekMonth = String(lastWeekDate.getMonth() + 1).padStart(2, '0');
+    const lastWeekDay = String(lastWeekDate.getDate()).padStart(2, '0');
+    const lastWeek = `${lastWeekYear}-${lastWeekMonth}-${lastWeekDay}`
+   
     const thisWeekOnly = parameterObjects.filter((user)=>{
         return user.date >= lastWeek || user.date <= today;
     })
-    console.log(thisWeekOnly)
     const averageArray = thisWeekOnly.map((user => (
         user.value
 
@@ -120,9 +144,9 @@ const userDataDisplay = (result, userParamData)=>{
     const valueArray = []
 
     const paramData = result[`${userParamData}`];
-    console.log(paramData);
+  
     for(let i =  0 ; i < paramData.length; i++){
-        console.log(paramData[i].value);
+       
         dateArray[i] = paramData[i].date;
         valueArray[i] = paramData[i].value;
 
@@ -132,19 +156,24 @@ const userDataDisplay = (result, userParamData)=>{
 }
 
 const userDataWeeklyDisplay = (result, userParamData)=>{
-    let todayDate = new Date();
-    let lastWeekDate = new Date(todayDate.getTime()-(60*60*24*7*1000))
-    const today = todayDate.toISOString().slice(0,10);
-    const lastWeek = lastWeekDate.toISOString().slice(0,10);
+    const todayDate = new Date();
+    const year = todayDate.getFullYear();
+    const month = String(todayDate.getMonth() + 1).padStart(2, '0');
+    const day = String(todayDate.getDate()).padStart(2, '0');
+    const today = `${year}-${month}-${day}`;
+    const lastWeekDate = new Date(todayDate.getTime()-(60*60*24*7*1000))
+    const lastWeekYear = lastWeekDate.getFullYear();
+    const lastWeekMonth = String(lastWeekDate.getMonth() + 1).padStart(2, '0');
+    const lastWeekDay = String(lastWeekDate.getDate()).padStart(2, '0');
+    const lastWeek = `${lastWeekYear}-${lastWeekMonth}-${lastWeekDay}`
     const dateArray = [];
     const valueArray = [];
-    console.log(today);
+
     const paramData = result[`${userParamData}`];
     let count = 0;
     for(let i =  0 ; i < paramData.length; i++){
        
-        console.log(paramData[i].date + " is " + paramData[i].date >= lastWeek)
-        console.log(paramData[i].date + " is " + paramData[i].date <= today)
+        
         if(paramData[i].date >= lastWeek && paramData[i].date <= today){
             
             dateArray[count] = paramData[i].date;
@@ -229,8 +258,6 @@ const averagesDataDisplay = (specificData) =>{
 }
 
 const getUserAverageForBreakDown = (array)=>{
-    console.log("passed to function is")
-    console.log(array);
     if(array.length == 0)
         return 0;
    return Math.round(array.reduce((accumulator, currentValue) => {
@@ -239,4 +266,4 @@ const getUserAverageForBreakDown = (array)=>{
     
 }
 
-export {simpleSum, getUserAverageForBreakDown, dataPresent, BMI, averageMetric, compare, averageWeeklyMetric, userBMR, userDataDisplay, averagesDataDisplay, userDataWeeklyDisplay, weeklyPopulationAverage, weeklyStandardDeviation, greaterOrLessThan}
+export {todayStats, simpleSum, getUserAverageForBreakDown, dataPresent, BMI, averageMetric, compare, averageWeeklyMetric, userBMR, userDataDisplay, averagesDataDisplay, userDataWeeklyDisplay, weeklyPopulationAverage, weeklyStandardDeviation, greaterOrLessThan}

@@ -17,7 +17,7 @@ const UserData = ({ userResult, result }) => {
   return (
     <div className="userInfoContainer">
       {userResult.map((user) => (
-        <div className="userInfo" key={user.id}>
+        <div className="userInfo" key={user.id || 0}>
           <section className="column-1">
             <h2>
               Name:{" "}

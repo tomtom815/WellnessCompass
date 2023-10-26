@@ -14,6 +14,10 @@ function UpdateUserInfo({ result, onSubmission }) {
 
   const formattedDate = `${year}-${month}-${day}`;
   const [showAdd, setShowAdd] = useState('hide');
+  const initialFormData = {
+    id: result._id,
+    username: result.username,
+  };
   const [formData, setFormData] = useState({
     id: result._id,
     username: result.username,
@@ -67,6 +71,10 @@ function UpdateUserInfo({ result, onSubmission }) {
       document.getElementById('activeMinutes').value = '';
       document.getElementById('hoursSlept').value = '';
       document.getElementById('dailyMeals').value = '';
+      setFormData({
+        id: result._id,
+        username: result.username,
+    });
     } catch (error) {
       console.error('Error updating resource:', error);
       if (error.response && error.response.status === 401) {

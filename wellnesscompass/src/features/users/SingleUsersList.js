@@ -18,24 +18,20 @@ const SingleUser = ({ userName }) => {
 
   const userResult = GetOneUser({ userName });
   //GetAllUsers();
-  const [userDataRefreshFlag, setUserDataRefreshFlag] = useState(0); // Step 1: Create a state variable with initial value 0
 
   const result = userResult[0];
   if (!result) {
     return <div>Loading...</div>;
   }
 
-  const handleUserDataRefresh = () => {
-    setUserDataRefreshFlag(userDataRefreshFlag + 1); // Step 3: Update the key to trigger a refresh
-    console.log('handleUserDataRefresh called');
-  };
+  
 
   return (
     <main>
-      <UserData userResult={userResult} result={result} refreshFlag={userDataRefreshFlag} /> 
+      <UserData userResult={userResult} result={result} /> 
       <DataCharts />
       <br></br>
-      <UpdateUserInfo result={result} onSubmission={handleUserDataRefresh} /> 
+      <UpdateUserInfo result={result} /> 
       <button onClick={signOut}>Sign Out</button>
     </main>
   );

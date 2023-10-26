@@ -6,16 +6,8 @@ import {
 } from "../statistics/descriptiveStatistics";
 import { Tooltip } from "react-tooltip";
 
-const UserData = ({ userResult, result, refreshFlag }) => {
-  // Define a useEffect hook to listen for changes in refreshFlag
-  useEffect(() => {
-    userResult[0] &&
-      console.log(
-        userResult[0].weight[userResult[0].weight?.length - 1]?.value || 0
-      );
-    console.log('refreshFlag changed', refreshFlag);
-    console.log('userResult:', userResult);
-  }, [userResult, refreshFlag]); // Specify refreshFlag as a dependency
+const UserData = ({ userResult, result }) => {
+  
 
   if (!Array.isArray(userResult)) {
     // If userResult is not an array (initial load or error state), render loading or an error message
@@ -23,7 +15,7 @@ const UserData = ({ userResult, result, refreshFlag }) => {
   }
 
   return (
-    <div key={refreshFlag} className="userInfoContainer">
+    <div className="userInfoContainer">
       {userResult.map((user) => (
         <div className="userInfo" key={user.id}>
           <section className="column-1">

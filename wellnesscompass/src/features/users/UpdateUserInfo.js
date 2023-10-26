@@ -66,6 +66,7 @@ function UpdateUserInfo({ result, onSubmission }) {
       document.getElementById('steps').value = '';
       document.getElementById('activeMinutes').value = '';
       document.getElementById('hoursSlept').value = '';
+      document.getElementById('dailyMeals').value = '';
     } catch (error) {
       console.error('Error updating resource:', error);
       if (error.response && error.response.status === 401) {
@@ -129,6 +130,16 @@ function UpdateUserInfo({ result, onSubmission }) {
             type="integer"
             id="hoursSlept"
             name="hoursSlept"
+            onChange={handleChange}
+            onBlur={validateInput}
+          />
+        </div>
+        <div>
+          <label htmlFor="dailyMeals">Add Calories:</label>
+          <input
+            type="integer"
+            id="dailyMeals"
+            name="dailyMeals"
             onChange={handleChange}
             onBlur={validateInput}
           />

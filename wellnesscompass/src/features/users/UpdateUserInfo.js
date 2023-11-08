@@ -22,6 +22,7 @@ function UpdateUserInfo({ result, onSubmission }) {
     id: result._id,
     username: result.username,
   });
+  const [isFormValid, setIsFormValid] = useState(true); // Track form validity
 
   const toggleAdd = () => {
     setShowAdd(showAdd === 'hide' ? 'show' : 'hide');
@@ -37,6 +38,7 @@ function UpdateUserInfo({ result, onSubmission }) {
 
   const validateInput = (e) => {
     const { name, value } = e.target;
+    setIsFormValid(true); // Reset form validity
 
     // Check if the input value is empty
     if (value === '') {
@@ -47,19 +49,27 @@ function UpdateUserInfo({ result, onSubmission }) {
 
     if (isNaN(intValue)) {
       alert('Please enter an integer.');
+      setIsFormValid(false); // Set form as invalid
     } else {
       if (name === 'weight' && (intValue < 50 || intValue > 500)) {
         alert('Weight should be between 50 and 500 lbs.');
+        setIsFormValid(false); // Set form as invalid
       } else if (name === 'height' && (intValue < 36 || intValue > 90)) {
         alert('Height should be between 36 and 90 inches.');
-      }else if (name === 'hoursSlept' && (intValue < 2 || intValue > 16)) {
+        setIsFormValid(false); // Set form as invalid
+      } else if (name === 'hoursSlept' && (intValue < 2 || intValue > 16)) {
         alert('Hours slept should be between 2 and 16 hours');
+        setIsFormValid(false); // Set form as invalid
       }
     }
   };
 
   const handlePatch = async (e) => {
     e.preventDefault();
+
+    if (!isFormValid) {
+      return; // Prevent data submission if form is invalid
+    }
 
     try {
       const response = await axiosPrivate.patch('http://localhost:3500/users', formData);
@@ -73,7 +83,7 @@ function UpdateUserInfo({ result, onSubmission }) {
       setFormData({
         id: result._id,
         username: result.username,
-    });
+      });
     } catch (error) {
       console.error('Error updating resource:', error);
       if (error.response && error.response.status === 401) {

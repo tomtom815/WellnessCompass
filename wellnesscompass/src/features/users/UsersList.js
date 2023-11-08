@@ -37,12 +37,12 @@ const UsersList = () => {
   const averageActivityArray = usersResult.map((user) =>
     averageWeeklyMetric(user.activeMinutes)
   );
-
   const averageValuesObject = userNameArray.map((username, index) => ({
     username,
     averageSteps: averageStepsArray[index],
     averageActivity: averageActivityArray[index],
   }));
+  
 
   //create copy of array
   const sortBySteps = averageValuesObject.slice();

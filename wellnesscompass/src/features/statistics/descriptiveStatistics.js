@@ -89,10 +89,12 @@ const averageWeeklyMetric = (parameterObjects) => {
     const lastWeekMonth = String(lastWeekDate.getMonth() + 1).padStart(2, '0');
     const lastWeekDay = String(lastWeekDate.getDate()).padStart(2, '0');
     const lastWeek = `${lastWeekYear}-${lastWeekMonth}-${lastWeekDay}`
-   
+   console.log(lastWeek);
     const thisWeekOnly = parameterObjects.filter((user)=>{
-        return user.date >= lastWeek || user.date <= today;
+        console.log(user.date)
+        return user.date >= lastWeek && user.date <= today;
     })
+    console.log(thisWeekOnly)
     const averageArray = thisWeekOnly.map((user => (
         user.value
 

@@ -84,7 +84,7 @@ const DataCharts = ({userName}) => {
             <h1>Weekly Metrics</h1>
             <br></br>
             
-            { weeklyToggle == "weeklySteps" && (<div id = "weeklySteps">
+            { weeklyToggle == "weeklySteps" && (<div id = "weeklySteps"  style={{minHeight: "555px"}}>
            
                 
                 <Plot 
@@ -102,7 +102,7 @@ const DataCharts = ({userName}) => {
           </div>
           </div>)}
           
-            { weeklyToggle == 'weeklyActivity' && (<div id = "weeklyActivity">
+            { weeklyToggle == 'weeklyActivity' && (<div id = "weeklyActivity"  style={{minHeight: "555px"}} >
             
             <Plot 
             data={[
@@ -118,7 +118,7 @@ const DataCharts = ({userName}) => {
                
            
             </div>)}
-            { weeklyToggle == 'weeklySleep' && (<div id = "weeklySleep">
+            { weeklyToggle == 'weeklySleep' && (<div id = "weeklySleep" style={{minHeight: "555px"}} >
             
             <Plot 
             data={[
@@ -146,7 +146,7 @@ const DataCharts = ({userName}) => {
         <br></br>
         <h1>Lifetime Metrics</h1>
         <br></br>
-        {toggle == "steps" && ( <div id= "stepgraph">
+        {toggle == "steps" && ( <div id= "stepgraph" style={{minHeight: "555px"}}>
             
             <Plot 
             data={[
@@ -163,7 +163,7 @@ const DataCharts = ({userName}) => {
           </div>
 
             </div>)}
-        {toggle == "weight" && ( <div id= "weightGraph">
+        {toggle == "weight" && ( <div id= "weightGraph" style={{minHeight: "555px"}}>
         <Plot
                 data={[ 
                     { type: 'line', x: chartDataWeight[0],  y: chartDataWeight[1], marker: { color: "rgba(6, 57, 219, 0.4)"}, automargin: true},
@@ -172,7 +172,7 @@ const DataCharts = ({userName}) => {
                     {  title: 'Weight', xaxis: {title: {text: 'Date'} }, yaxis: {title: {text: 'Weight (lbs)'} }} } />
             </div>
             )}
-        {toggle == "activity" && (<div id= "activeMinutesGraph">
+        {toggle == "activity" && (<div id= "activeMinutesGraph" style={{minHeight: "555px"}}>
             <Plot
                 data={[
                     { x: averageChartDataActivity[0], y: averageChartDataActivity[1], name: 'Population',type: 'bar',mode: 'lines+markers',marker: {color: 'purple'}},{type: 'bar', x: chartDataActive[0], y: chartDataActive[1], name: 'Personal', marker: { color: "rgba(6, 57, 219, 0.4)"}, automargin: true}]}
@@ -183,7 +183,7 @@ const DataCharts = ({userName}) => {
              <p>Total Lifetime Active Minutes: {simpleSum(chartDataActive[1])}.</p>
             </div>
             )}
-            {toggle == "summary" && (<div id= "summaryChart">
+            {toggle == "summary" && (<div id= "summaryChart" style={{minHeight: "555px"}}> 
             <Plot
                 data={[
                     { values:[averageLifeTimeActivity/60, getUserAverageForBreakDown(chartWeeklyDataSleep[1]), (24-averageLifeTimeActivity/60-getUserAverageForBreakDown(chartWeeklyDataSleep[1]))], labels: ["Active Hours", "Sleep", "Other"],type: 'pie',marker: {color: ['purple', "blue", "green"]}, automargin: true}]}
@@ -192,7 +192,7 @@ const DataCharts = ({userName}) => {
                     }} />
                 <p>On average, you spend:</p>
                 <p>
-                {averageLifeTimeActivity/60} hours a day active.
+                {Math.round((averageLifeTimeActivity/60) * 100) / 100} hours a day active.
                 </p>
                 <p>
                 {getUserAverageForBreakDown(chartWeeklyDataSleep[1])} hours a day sleeping.

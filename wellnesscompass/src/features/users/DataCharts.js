@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { GetAllUsers } from '../../app/api/fetchAllUsers';
 import { GetOneUser } from '../../app/api/fetchOneUser';
 import Plot from 'react-plotly.js';
+import Plotly from 'react-plotly.js'
 import { Tooltip } from "react-tooltip";
 
 import { averageMetric, userDataDisplay, averagesDataDisplay, userDataWeeklyDisplay, weeklyPopulationAverage, weeklyStandardDeviation, greaterOrLessThan, getUserAverageForBreakDown, simpleSum, todayStats } from '../statistics/descriptiveStatistics';
@@ -43,9 +44,84 @@ const DataCharts = ({userName}) => {
     const averageLifeTimeActivity = getUserAverageForBreakDown(chartDataActive[1]);
     const averageChartDataSteps = averagesDataDisplay(allTheSteps)
     const averageChartDataActivity = averagesDataDisplay(allTheActivity);
+
     
+   if(!(chartDataActive[0][0]) == false){
+    while(chartDataActive[0][0] > averageChartDataActivity[0][0]){
+        averageChartDataActivity[0].shift();
+        averageChartDataActivity[1].shift();
+    }
+   }
+
+  
+   if(!(chartDataSteps[0][0]) == false){ 
+    while(chartDataSteps[0][0] > averageChartDataSteps[0][0]){
+      averageChartDataSteps[0].shift();
+        averageChartDataSteps[1].shift();
+    
+    }
+   }
+
+   const userWeekSteps = {
+        x: chartWeeklyDataSteps[0],
+        y: chartWeeklyDataSteps[1],
+        type: 'bar',
+        name: 'Weekly Steps',
+        marker: {color: 'purple'}
+   }
+
+   const userWeekActivity1 = {
+    x: chartWeeklyDataSteps[0],
+    y: chartWeeklyDataSteps[1],
+    type: 'bar',
+    name: 'Weekly Active Minutes',
+    marker: {color: 'purple'}
+   }
+   
+    const lifeTimeActivity1 = {
+        x: averageChartDataActivity[0],
+        y: averageChartDataActivity[1], 
+        name: 'Population',
+        type: 'bar', 
+        marker: {color: 'purple'}
+    }
+
+    const lifeTimeActivity2 = {
+        x: chartDataActive[0],
+        y: chartDataActive[1],type: 'bar', 
+        name: 'Personal', 
+        marker: { color: "rgba(6, 57, 219, 0.4)"}
+    }
+    const lifeTimeDataActivityDisplay = [lifeTimeActivity1, lifeTimeActivity2]
+
+    const lifeTimeSteps1 = {
+        x: averageChartDataSteps[0],
+        y: averageChartDataSteps[1], 
+        name: 'Population',
+        type: 'bar', 
+        marker: {color: 'purple'}
+    }
+
+    const lifeTimeSteps2 = {
+        x: chartDataSteps[0],
+        y: chartDataSteps[1],
+        type: 'bar', 
+        name: 'Personal', 
+        marker: { color: "rgba(6, 57, 219, 0.4)"}
+    }
+    const lifeTimeDataStepsDisplay = [lifeTimeSteps1, lifeTimeSteps2];
+
+    const layoutSingle = {
+        automargin: true
+    }
+    const layoutGroup = {
+        barmode: 'group',
+        automargin: true
+    }
+
     
 
+  
 
   return (
     <div id = "totalContainer">
@@ -86,12 +162,9 @@ const DataCharts = ({userName}) => {
             
             { weeklyToggle == "weeklySteps" && (<div id = "weeklySteps"  style={{minHeight: "555px"}}>
            
-                
                 <Plot 
-          data={[
-              {x: chartWeeklyDataSteps[0], y: chartWeeklyDataSteps[1], type: 'bar', name: 'Weekly Steps', mode: 'lines+markers', marker: {color: 'purple'}, automargin: true}]}
-          layout={ 
-              {  title: 'Steps', xaxis: {title: {text: 'Date'} }, yaxis: {title: {text: 'Weekly Steps'} }} } /> 
+                data = {[userWeekSteps]}
+                layout={[{title:'Test'}, layoutGroup]} /> 
               
         
              <div >
@@ -106,7 +179,7 @@ const DataCharts = ({userName}) => {
             
             <Plot 
             data={[
-                {x: chartWeeklyDataActivity[0], y: chartWeeklyDataActivity[1], type: 'bar', name: 'Weekly Activity', mode: 'lines+markers', marker: {color: 'purple'}, automargin: true}]}
+                {x: chartWeeklyDataActivity[0], y: chartWeeklyDataActivity[1], type: 'bar', name: 'Weekly Activity', marker: {color: 'purple'}, automargin: true}]}
             layout={ 
                 { title: 'Active Minutes', xaxis: {title: {text: 'Date'} }, yaxis: {title: {text: 'Weekly Active Minutes'} }} } />
               <div>
@@ -115,14 +188,13 @@ const DataCharts = ({userName}) => {
                <p>{greaterOrLessThan(userAverageActivity, populationAverageActivity)}</p>
               </div>
               
-               
            
             </div>)}
             { weeklyToggle == 'weeklySleep' && (<div id = "weeklySleep" style={{minHeight: "555px"}} >
             
             <Plot 
             data={[
-                {x: chartWeeklyDataSleep[0], y: chartWeeklyDataSleep[1], type: 'bar', name: 'Weekly Hours Slept', mode: 'lines+markers', marker: {color: 'purple'}, automargin: true}]}
+                {x: chartWeeklyDataSleep[0], y: chartWeeklyDataSleep[1], type: 'bar', name: 'Weekly Hours Slept',  marker: {color: 'purple'}, automargin: true}]}
             layout={ 
                 { title: 'Hours Slept', xaxis: {title: {text: 'Date'} }, yaxis: {title: {text: 'Weekly Hours Slept'} }} } />
               
@@ -147,19 +219,13 @@ const DataCharts = ({userName}) => {
         <h1>Lifetime Metrics</h1>
         <br></br>
         {toggle == "steps" && ( <div id= "stepgraph" style={{minHeight: "555px"}}>
-            
             <Plot 
-            data={[
-                {x: averageChartDataSteps[0], y: averageChartDataSteps[1], type: 'bar', name: 'Population', mode: 'lines+markers', marker: {color: 'purple'}},
-                {type: 'bar', x:  chartDataSteps[0], name: 'Personal', y:  chartDataSteps[1], marker: { color: "rgba(6, 57, 219, 0.4)"}, automargin: true},]}
-            layout={ 
-                { title: 'Steps', xaxis: {title: {text: 'Date'} }, yaxis: {title: {text: 'Steps'} }} } />
-            
+                data= {lifeTimeDataStepsDisplay}
+                layout={{barmode: 'group',  automargin: true}}/>
             <div >
              <p>Average Lifetime Steps: {averageLifeTimeSteps}.</p>
              <p>Total Lifetime Steps: {simpleSum(chartDataSteps[1])}.</p>
-             
-            
+              
           </div>
 
             </div>)}
@@ -174,12 +240,9 @@ const DataCharts = ({userName}) => {
             )}
         {toggle == "activity" && (<div id= "activeMinutesGraph" style={{minHeight: "555px"}}>
             <Plot
-                data={[
-                    { x: averageChartDataActivity[0], y: averageChartDataActivity[1], name: 'Population',type: 'bar',mode: 'lines+markers',marker: {color: 'purple'}},{type: 'bar', x: chartDataActive[0], y: chartDataActive[1], name: 'Personal', marker: { color: "rgba(6, 57, 219, 0.4)"}, automargin: true}]}
-                layout={ {
-                  title: 'Active Minutes',xaxis: {itle: {text: 'Date'} }, yaxis: {title: {text: 'Active Minutes'}}
-                    }} />
-                <p>Average Lifetime Active Minutes: {averageLifeTimeActivity}.</p>
+                data= {lifeTimeDataActivityDisplay}
+                layout={[layoutGroup, {title: "Lifetime Active Minutes"}]}/>
+            <p>Average Lifetime Active Minutes: {averageLifeTimeActivity}.</p>
              <p>Total Lifetime Active Minutes: {simpleSum(chartDataActive[1])}.</p>
             </div>
             )}
@@ -202,6 +265,8 @@ const DataCharts = ({userName}) => {
                 </p>
             </div>
             )}
+           
+      
             <div className= "buttonLine">
                 <button className='buttonCl' onClick={()=>setToggle("steps")}><h2>Steps</h2></button>
                 <button className='buttonCl' onClick={()=>setToggle("weight")}><h2>Weight</h2></button>

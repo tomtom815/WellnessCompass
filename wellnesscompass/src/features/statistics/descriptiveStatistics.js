@@ -89,12 +89,12 @@ const averageWeeklyMetric = (parameterObjects) => {
     const lastWeekMonth = String(lastWeekDate.getMonth() + 1).padStart(2, '0');
     const lastWeekDay = String(lastWeekDate.getDate()).padStart(2, '0');
     const lastWeek = `${lastWeekYear}-${lastWeekMonth}-${lastWeekDay}`
-   console.log(lastWeek);
+  
     const thisWeekOnly = parameterObjects.filter((user)=>{
-        console.log(user.date)
+     
         return user.date >= lastWeek && user.date <= today;
     })
-    console.log(thisWeekOnly)
+   
     const averageArray = thisWeekOnly.map((user => (
         user.value
 
@@ -146,14 +146,33 @@ const userDataDisplay = (result, userParamData)=>{
     const valueArray = []
 
     const paramData = result[`${userParamData}`];
-  
-    for(let i =  0 ; i < paramData.length; i++){
-       
-        dateArray[i] = paramData[i].date;
-        valueArray[i] = paramData[i].value;
-
+    paramData.forEach((value => {
+        if(!dateArray.includes(value.date))
+            dateArray.push(value.date)
+    }));
+    let count = 1;
+    if(userParamData != 'weight'){
+        for(let i =  0 ; i < dateArray.length; i++){
+                valueArray[i] = 0
+            for(let j = 0; j < paramData.length; j++){
+                if(dateArray[i] == paramData[j].date){
+                    valueArray[i] += paramData[j].value;
+                }
+            }
+            
+        }
     }
- 
+    else{
+        for(let i =  0 ; i < dateArray.length; i++){
+        for(let j = 0; j < paramData.length; j++){
+            if(dateArray[i] == paramData[j].date){
+                valueArray[i] = paramData[j].value;
+            }
+        }
+        
+    }
+}
+
     return [dateArray, valueArray]
 }
 
@@ -172,6 +191,7 @@ const userDataWeeklyDisplay = (result, userParamData)=>{
     const valueArray = [];
 
     const paramData = result[`${userParamData}`];
+   
     let count = 0;
     for(let i =  0 ; i < paramData.length; i++){
        
@@ -232,29 +252,27 @@ const greaterOrLessThan =(userData, populationData) => {
 }
 const averagesDataDisplay = (specificData) =>{
     const averageDateArray = []
-    const collectionOfValues = []
+    const cummulationArray = []
+    const countArray = []
     const averageValueArray = []
     specificData.forEach((user => {
-        if(!specificData.includes(user.date))
+        if(!averageDateArray.includes(user.date))
             averageDateArray.push(user.date)
     }));
     for(let k = 0; k < averageDateArray.length; k++){
-        collectionOfValues[k] = [];
-        for(let i = 0; i < averageDateArray.length; i++){
+        countArray[k] = 1;
+        cummulationArray[k] = 0;
+        for(let i = 0; i < specificData.length; i++){
             if(specificData[i].date == averageDateArray[k]){
-                const value = specificData[i].value;
-                collectionOfValues[k].push(value); 
+                cummulationArray[k] += specificData[i].value;
+                countArray[k] += 1; 
             }
         }
     }
-    for(let i = 0; i < collectionOfValues.length; i++){
-        const length = collectionOfValues[i].length;
-        let sum = 0;
-        for(let k = 0; k < collectionOfValues[i].length; k++){
-            sum = collectionOfValues[i][k];
-
-        }
-        averageValueArray.push(Math.round(sum/length));
+    for(let i = 0; i < cummulationArray.length; i++){
+        const lengthCount = countArray[i];
+        const sum = cummulationArray[i];
+        averageValueArray.push(Math.round(sum/lengthCount));
     }   
     return [averageDateArray, averageValueArray]
 }
@@ -267,5 +285,6 @@ const getUserAverageForBreakDown = (array)=>{
     })/array.length);
     
 }
+
 
 export {todayStats, simpleSum, getUserAverageForBreakDown, dataPresent, BMI, averageMetric, compare, averageWeeklyMetric, userBMR, userDataDisplay, averagesDataDisplay, userDataWeeklyDisplay, weeklyPopulationAverage, weeklyStandardDeviation, greaterOrLessThan}

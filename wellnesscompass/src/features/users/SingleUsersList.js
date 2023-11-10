@@ -24,6 +24,7 @@ const SingleUser = ({ userName }) => {
     return <div>Loading...</div>;
   }
   
+  //control whether to display add info
   const currentUserPage = result.username;
   let accessingUser =  localStorage.getItem("userID");
   let accessView = ""

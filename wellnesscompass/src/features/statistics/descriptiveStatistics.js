@@ -48,10 +48,11 @@ const averageMetric = (averageMetricArray) => {
     
 }
 
+//returns an array of arrays containing health parameters 
 const todayStats = (object) => {
     const array = [];
-    const todayDate = new Date();
 
+    const todayDate = new Date();
     const year = todayDate.getFullYear();
     const month = String(todayDate.getMonth() + 1).padStart(2, '0');
     const day = String(todayDate.getDate()).padStart(2, '0');

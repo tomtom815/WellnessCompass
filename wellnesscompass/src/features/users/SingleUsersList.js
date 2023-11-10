@@ -23,6 +23,13 @@ const SingleUser = ({ userName }) => {
   if (!result) {
     return <div>Loading...</div>;
   }
+  
+  const currentUserPage = result.username;
+  let accessingUser =  localStorage.getItem("userID");
+  let accessView = ""
+  if(accessingUser !== currentUserPage ){
+    accessView = "none"
+  }
 
   
 
@@ -31,7 +38,10 @@ const SingleUser = ({ userName }) => {
       <UserData userResult={userResult} result={result} /> 
       <DataCharts />
       <br></br>
-      <UpdateUserInfo result={result} /> 
+      <div style ={{ display: accessView}}>
+      <UpdateUserInfo result={result}/> 
+      </div>
+      
       <button onClick={signOut}>Sign Out</button>
     </main>
   );

@@ -30,12 +30,14 @@ function UpdateUserInfo({ result, onSubmission }) {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-  
+    
     if (name === 'userConsent') {
-      setFormData({
-        ...formData,
-        [name]: value === 'true', // Set userConsent to true if 'true' is selected, false otherwise
-      });
+      if (value !== '') {
+        setFormData({
+          ...formData,
+          [name]: value === 'true', // Set userConsent to true if 'true' is selected, false otherwise
+        });
+      }
     } else {
       setFormData({
         ...formData,
@@ -173,6 +175,7 @@ function UpdateUserInfo({ result, onSubmission }) {
         <div>
           <label htmlFor="userConsent">User Consent (true/false):</label>
             <select id="userConsent" name="userConsent" onChange={handleChange}>
+              <option value=""> </option>
               <option value="true">True</option>
               <option value="false">False</option>
             </select>

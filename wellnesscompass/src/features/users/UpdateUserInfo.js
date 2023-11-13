@@ -30,10 +30,18 @@ function UpdateUserInfo({ result, onSubmission }) {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: { value: parseInt(value), date: formattedDate },
-    });
+  
+    if (name === 'userConsent') {
+      setFormData({
+        ...formData,
+        [name]: value === 'true', // Set userConsent to true if 'true' is selected, false otherwise
+      });
+    } else {
+      setFormData({
+        ...formData,
+        [name]: { value: parseInt(value), date: formattedDate },
+      });
+    }
   };
 
   const validateInput = (e) => {
@@ -84,6 +92,7 @@ function UpdateUserInfo({ result, onSubmission }) {
         id: result._id,
         username: result.username,
       });
+      
     } catch (error) {
       console.error('Error updating resource:', error);
       if (error.response && error.response.status === 401) {
@@ -160,6 +169,13 @@ function UpdateUserInfo({ result, onSubmission }) {
             onChange={handleChange}
             onBlur={validateInput}
           />
+        </div>
+        <div>
+          <label htmlFor="userConsent">User Consent (true/false):</label>
+            <select id="userConsent" name="userConsent" onChange={handleChange}>
+              <option value="true">True</option>
+              <option value="false">False</option>
+            </select>
         </div>
         <button type="submit">Update</button>
       </form>

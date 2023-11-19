@@ -108,7 +108,6 @@ const Register = () => {
     // "username," "password," or "matchPassword" states.
     setErrMsg('');
   }, [username, password, matchPassword]);
-
   const handleSubmit = async (e) => {
     // Prevent the default form submisttion behavior to handle validation and submissions manually.
     e.preventDefault();

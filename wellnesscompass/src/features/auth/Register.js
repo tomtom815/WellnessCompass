@@ -1,67 +1,87 @@
-import React from 'react'
+import React from "react";
 import { useRef, useState, useEffect } from "react";
-import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCheck,
+  faTimes,
+  faInfoCircle,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import axios from '../../app/api/axios'
-import './Register.css'
+import axios from "../../app/api/axios";
+import "./Register.css";
 
 // Regular expressions for validation
-const NAME_REGEX = /^[A-Z][a-z]{2,15}$/
+const NAME_REGEX = /^[A-Z][a-z]{2,15}$/;
+const GENDER_REGEX =
+  /(?:m|M|male|Male|f|F|female|Female|FEMALE|MALE|Prefer not to say)$/;
+const AGE_REGEX = /^(1[3-9]|[2-9]\d|\d{3,})$/;
 const USERNAME_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
-const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%=]).{8,24}$/;
-const REGISTER_URL = '/users'
+const PASSWORD_REGEX =
+  /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%=]).{8,24}$/;
+const REGISTER_URL = "/users";
 
 const Register = () => {
   // Refs for input fields
   const firstNameRef = useRef();
   const lastNameRef = useRef();
+  const genderRef = useRef();
+  const ageRef = useRef();
   const usernameRef = useRef();
   const errRef = useRef();
 
   // State for first name input
-  const [firstName, setFirstName] = useState('');
+  const [firstName, setFirstName] = useState("");
   const [validFirstName, setValidFirstName] = useState(false);
   const [firstNameFocus, setFirstNameFocus] = useState(false);
 
   // State for last name input
-  const [lastName, setLastName] = useState('');
+  const [lastName, setLastName] = useState("");
   const [validLastName, setValidLastName] = useState(false);
   const [lastNameFocus, setLastNameFocus] = useState(false);
 
+  // State for gender input
+  const [gender, setGender] = useState("");
+  const [validGender, setValidGender] = useState(false);
+  const [genderFocus, setGenderFocus] = useState(false);
+
+  // State for age input
+  const [age, setAge] = useState("");
+  const [validAge, setValidAge] = useState(false);
+  const [ageFocus, setAgeFocus] = useState(false);
+
   // State for username name input
-  const [username, setUsername] = useState('');
+  const [username, setUsername] = useState("");
   const [validUsername, setValidUsername] = useState(false);
   const [usernameFocus, setUsernameFocus] = useState(false);
 
   // State for password input
-  const [password, setPassword] = useState('');
+  const [password, setPassword] = useState("");
   const [validPassword, setValidPassword] = useState(false);
   const [PasswordFocus, setPasswordFocus] = useState(false);
 
   // State for password confirmation input
-  const [matchPassword, setMatchPassword] = useState('');
+  const [matchPassword, setMatchPassword] = useState("");
   const [validMatch, setValidMatch] = useState(false);
   const [matchFocus, setMatchFocus] = useState(false);
 
   // State for error message
-  const [errMsg, setErrMsg] = useState('');
+  const [errMsg, setErrMsg] = useState("");
 
   // State for success message
   const [success, setSuccess] = useState(false);
 
   // Use Effect to Set Initial Focus on the "First Name" Input Field
   useEffect(() => {
-      // This effect is triggered once when the component initially renders 
-      // due to an empty dependency array.
+    // This effect is triggered once when the component initially renders
+    // due to an empty dependency array.
     firstNameRef.current.focus();
   }, []);
 
   // Use Effect to Validate and Update the "First Name" Input
   useEffect(() => {
     // This effect runs whenever the "firstName" state changes, as indicated by the [firstName] dependency array.
-  // It validates the "First Name" input against the NAME_REGEX pattern using .test().
-  // The result is a boolean value indicating whether the input matches the pattern.
-  // The validation result is logged for debugging purposes and then stored in the "validFirstName" state.
+    // It validates the "First Name" input against the NAME_REGEX pattern using .test().
+    // The result is a boolean value indicating whether the input matches the pattern.
+    // The validation result is logged for debugging purposes and then stored in the "validFirstName" state.
     const result = NAME_REGEX.test(firstName);
     console.log(result);
     console.log(username);
@@ -77,6 +97,22 @@ const Register = () => {
     setValidLastName(result);
   }, [lastName]);
 
+  // Use Effect to validate and update the "Gender" input
+  useEffect(() => {
+    const result = GENDER_REGEX.test(gender);
+    console.log(result);
+    console.log(gender);
+    setValidGender(result);
+  }, [gender]);
+
+  // Use effect to validate and update the "Age" input
+  useEffect(() => {
+    const result = AGE_REGEX.test(age);
+    console.log(result);
+    console.log(age);
+    setValidAge(result);
+  }, [age]);
+
   // Use Effect to Validate and Update the "Username" Input
   useEffect(() => {
     // Similar to the previous effect
@@ -84,7 +120,6 @@ const Register = () => {
     console.log(result);
     console.log(username);
     setValidUsername(result);
-
   }, [username]);
 
   // Use Effect to Validate and Update the "Password" Inputs
@@ -106,19 +141,29 @@ const Register = () => {
   useEffect(() => {
     // This effect clears the error message whenever there are changes in the
     // "username," "password," or "matchPassword" states.
-    setErrMsg('');
+    setErrMsg("");
   }, [username, password, matchPassword]);
+
   const handleSubmit = async (e) => {
     // Prevent the default form submisttion behavior to handle validation and submissions manually.
     e.preventDefault();
-    
+
     // Check if all validation conditions are met
     const isUsernameValid = USERNAME_REGEX.test(username);
     const isPasswordValid = PASSWORD_REGEX.test(password);
     const isFirstNameValid = NAME_REGEX.test(firstName);
     const isLastNameValid = NAME_REGEX.test(lastName);
+    const isGenderValid = GENDER_REGEX.test(gender);
+    const isAgeValid = AGE_REGEX.test(age);
 
-    if (!isUsernameValid || !isPasswordValid || !isFirstNameValid || !isLastNameValid) {
+    if (
+      !isUsernameValid ||
+      !isPasswordValid ||
+      !isFirstNameValid ||
+      !isLastNameValid ||
+      !isGenderValid ||
+      !isAgeValid
+    ) {
       // Set error message if any of the validation conditions fail
       setErrMsg("invalid Entry");
       // Exit early to prevent submission
@@ -126,11 +171,19 @@ const Register = () => {
     }
 
     try {
-      const response = await axios.post(REGISTER_URL,
-        JSON.stringify({ firstName, lastName, username, password }),
+      const response = await axios.post(
+        REGISTER_URL,
+        JSON.stringify({
+          firstName,
+          lastName,
+          gender,
+          age,
+          username,
+          password,
+        }),
         {
-          headers: { ' Content-Type': 'application/json' },
-          withCredentials: true
+          headers: { " Content-Type": "application/json" },
+          withCredentials: true,
         }
       );
       console.log(response.data);
@@ -139,28 +192,29 @@ const Register = () => {
       setSuccess(true);
 
       // Clear input fields. Set state back to empty strings
-      setFirstName('');
-      setLastName('');
-      setUsername('');
-      setPassword('');
-      setMatchPassword('');
-
+      setFirstName("");
+      setLastName("");
+      setGender("");
+      setAge("");
+      setUsername("");
+      setPassword("");
+      setMatchPassword("");
     } catch (err) {
       if (!err?.response) {
-        setErrMsg('No Server Response');
+        setErrMsg("No Server Response");
       } else if (err.response?.status === 409) {
-        setErrMsg('Username Taken');
+        setErrMsg("Username Taken");
       } else {
-        console.log(err.response)
-        console.log(err.message)
+        console.log(err.response);
+        console.log(err.message);
         console.log(err.name);
         console.log(err.stack);
 
-        setErrMsg('Registration Failed');
+        setErrMsg("Registration Failed");
       }
       errRef.current.focus();
     }
-  }
+  };
 
   return (
     <>
@@ -173,17 +227,23 @@ const Register = () => {
         </section>
       ) : (
         <section>
-          <p ref={errRef} className={errMsg ? "errmsg" :
-            "offscreen"} aria-live="assertive">{errMsg}</p>
+          <p
+            ref={errRef}
+            className={errMsg ? "errmsg" : "offscreen"}
+            aria-live="assertive"
+          >
+            {errMsg}
+          </p>
           <h1>Register</h1>
           <form onSubmit={handleSubmit}>
             <label htmlFor="firstName">
-                First Name:
-                <span className={validFirstName ? "valid" : "hide"}>
-                  <FontAwesomeIcon icon={faCheck} />
-                </span>
-                <span className={validFirstName || !firstName ? "hide" :
-                "invalid"}>
+              First Name:
+              <span className={validFirstName ? "valid" : "hide"}>
+                <FontAwesomeIcon icon={faCheck} />
+              </span>
+              <span
+                className={validFirstName || !firstName ? "hide" : "invalid"}
+              >
                 <FontAwesomeIcon icon={faTimes} />
               </span>
             </label>
@@ -199,20 +259,27 @@ const Register = () => {
               onFocus={() => setFirstNameFocus(true)}
               onBlur={() => setFirstNameFocus(false)}
             />
-            <p id="uidnote" className={firstNameFocus && firstName
-              && !validFirstName ? "instructions" : "offscreen"}>
+            <p
+              id="uidnote"
+              className={
+                firstNameFocus && firstName && !validFirstName
+                  ? "instructions"
+                  : "offscreen"
+              }
+            >
               <FontAwesomeIcon icon={faInfoCircle} />
-              3 to 15 characters.<br />
-              Must begin with a  capital letter.<br />
-              </p>
-              
+              3 to 15 characters.
+              <br />
+              Must begin with a capital letter.
+              <br />
+            </p>
+
             <label htmlFor="lastName">
-                Last Name:
-                <span className={validLastName ? "valid" : "hide"}>
-                  <FontAwesomeIcon icon={faCheck} />
-                </span>
-                <span className={validLastName || !lastName ? "hide" :
-                "invalid"}>
+              Last Name:
+              <span className={validLastName ? "valid" : "hide"}>
+                <FontAwesomeIcon icon={faCheck} />
+              </span>
+              <span className={validLastName || !lastName ? "hide" : "invalid"}>
                 <FontAwesomeIcon icon={faTimes} />
               </span>
             </label>
@@ -228,11 +295,85 @@ const Register = () => {
               onFocus={() => setLastNameFocus(true)}
               onBlur={() => setLastNameFocus(false)}
             />
-            <p id="uidnote" className={lastNameFocus && lastName
-              && !validLastName ? "instructions" : "offscreen"}>
+            <p
+              id="uidnote"
+              className={
+                lastNameFocus && lastName && !validLastName
+                  ? "instructions"
+                  : "offscreen"
+              }
+            >
               <FontAwesomeIcon icon={faInfoCircle} />
-              3 to 15 characters.<br />
-              Must begin with a  capital letter.<br />
+              3 to 15 characters.
+              <br />
+              Must begin with a capital letter.
+              <br />
+            </p>
+
+            <label htmlFor="gender">
+              Gender:
+              <span className={validGender ? "valid" : "hide"}>
+                <FontAwesomeIcon icon={faCheck} />
+              </span>
+              <span className={validGender || !gender ? "hide" : "invalid"}>
+                <FontAwesomeIcon icon={faTimes} />
+              </span>
+            </label>
+            <input
+              type="text"
+              id="gender"
+              ref={genderRef}
+              autoComplete="off"
+              onChange={(e) => setGender(e.target.value)}
+              required
+              aria-invalid={validGender ? "false" : "true"}
+              aria-describedby="gendernote"
+              onFocus={() => setGenderFocus(true)}
+              onBlur={() => setGenderFocus(false)}
+            />
+            <p
+              id="gendernote"
+              className={
+                genderFocus && gender && !validGender
+                  ? "instructions"
+                  : "offscreen"
+              }
+            >
+              <FontAwesomeIcon icon={faInfoCircle} />
+              Male/Female/Prefer Not To Say
+            </p>
+
+            <label htmlFor="age">
+              Age:
+              <span className={validAge ? "valid" : "hide"}>
+                <FontAwesomeIcon icon={faCheck} />
+              </span>
+              <span className={validAge || !age ? "hide" : "invalid"}>
+                <FontAwesomeIcon icon={faTimes} />
+              </span>
+            </label>
+            <input
+              type="number"
+              id="age"
+              ref={ageRef}
+              autoComplete="off"
+              onChange={(e) => setAge(e.target.value)}
+              required
+              aria-invalid={validAge ? "false" : "true"}
+              aria-describedby="agenote"
+              onFocus={() => setAgeFocus(true)}
+              onBlur={() => setAgeFocus(false)}
+            />
+            <p
+              id="agenote"
+              className={
+                ageFocus && age && !validAge
+                  ? "instructions"
+                  : "offscreen"
+              }
+            >
+              <FontAwesomeIcon icon={faInfoCircle} />
+              Must be 13 or older to join
             </p>
 
             <label htmlFor="username">
@@ -240,8 +381,7 @@ const Register = () => {
               <span className={validUsername ? "valid" : "hide"}>
                 <FontAwesomeIcon icon={faCheck} />
               </span>
-              <span className={validUsername || !username ? "hide" :
-                "invalid"}>
+              <span className={validUsername || !username ? "hide" : "invalid"}>
                 <FontAwesomeIcon icon={faTimes} />
               </span>
             </label>
@@ -257,11 +397,19 @@ const Register = () => {
               onFocus={() => setUsernameFocus(true)}
               onBlur={() => setUsernameFocus(false)}
             />
-            <p id="uidnote" className={usernameFocus && username
-              && !validUsername ? "instructions" : "offscreen"}>
+            <p
+              id="uidnote"
+              className={
+                usernameFocus && username && !validUsername
+                  ? "instructions"
+                  : "offscreen"
+              }
+            >
               <FontAwesomeIcon icon={faInfoCircle} />
-              4 to 24 characters.<br />
-              Must begin with a letter.<br />
+              4 to 24 characters.
+              <br />
+              Must begin with a letter.
+              <br />
               Letters, numbers, underscores, hyphens allowed.
             </p>
 
@@ -284,15 +432,23 @@ const Register = () => {
               onFocus={() => setPasswordFocus(true)}
               onBlur={() => setPasswordFocus(false)}
             />
-            <p id="Passwordnote" className={PasswordFocus && !validPassword ? "instructions" :
-              "offscreen"}>
+            <p
+              id="Passwordnote"
+              className={
+                PasswordFocus && !validPassword ? "instructions" : "offscreen"
+              }
+            >
               <FontAwesomeIcon icon={faInfoCircle} />
-              8 to 24 characters.<br />
-              Must include uppercase and lowercase letters, a number and
-              a special character. <br />
-              Allowed special characters: <span aria-label="exclamation mark">!</span>
-              <span aria-label="at symbol">@</span> <span aria-label="hashtag">#</span>
-              <span aria-label="dollar sign">$</span><span aria-label="percent">%</span>
+              8 to 24 characters.
+              <br />
+              Must include uppercase and lowercase letters, a number and a
+              special character. <br />
+              Allowed special characters:{" "}
+              <span aria-label="exclamation mark">!</span>
+              <span aria-label="at symbol">@</span>{" "}
+              <span aria-label="hashtag">#</span>
+              <span aria-label="dollar sign">$</span>
+              <span aria-label="percent">%</span>
               <span aria-label="equal sign">=</span>
             </p>
 
@@ -301,7 +457,9 @@ const Register = () => {
               <span className={validMatch && matchPassword ? "valid" : "hide"}>
                 <FontAwesomeIcon icon={faCheck} />
               </span>
-              <span className={validMatch || !matchPassword ? "hide" : "invalid"}>
+              <span
+                className={validMatch || !matchPassword ? "hide" : "invalid"}
+              >
                 <FontAwesomeIcon icon={faTimes} />
               </span>
             </label>
@@ -315,25 +473,35 @@ const Register = () => {
               onFocus={() => setMatchFocus(true)}
               onBlur={() => setMatchFocus(false)}
             />
-            <p id="confirmnote" className={matchFocus && !validMatch ? "instructions" :
-              "offscreen"}>
+            <p
+              id="confirmnote"
+              className={
+                matchFocus && !validMatch ? "instructions" : "offscreen"
+              }
+            >
               <FontAwesomeIcon icon={faInfoCircle} />
               Must match the first password input field.
             </p>
-        
-            <button disabled={!validUsername || !validPassword || !validMatch ? true : false}
-            >Sign Up</button>
+
+            <button
+              disabled={
+                !validUsername || !validPassword || !validMatch ? true : false
+              }
+            >
+              Sign Up
+            </button>
           </form>
           <p>
-            Already registered?<br />
+            Already registered?
+            <br />
             <span className="line">
               <a href="/login">Sign In</a>
             </span>
           </p>
         </section>
       )}
-      </>
-  )
-}
+    </>
+  );
+};
 
-export default Register
+export default Register;

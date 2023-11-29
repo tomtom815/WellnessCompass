@@ -25,8 +25,8 @@ const DataCharts = ({userName}) => {
     const chartWeeklyDataSleep = userDataWeeklyDisplay(result, "hoursSlept");
     const chartWeeklyDataSteps = userDataWeeklyDisplay(result, "steps");
     const chartWeeklyDataActivity =userDataWeeklyDisplay(result, "activeMinutes");
-    const populationAverageSteps = Math.round(weeklyPopulationAverage(allUsers,"steps"));
-    const populationAverageActivity = Math.round(weeklyPopulationAverage(allUsers, "activeMinutes"));
+    const populationAverageSteps = Math.round(weeklyPopulationAverage(allUsersUnfiltered,"steps"));
+    const populationAverageActivity = Math.round(weeklyPopulationAverage(allUsersUnfiltered, "activeMinutes"));
     
     const allTheSteps = allUsers.map((user =>
        user.steps

@@ -13,12 +13,12 @@ const DataCharts = ({userName}) => {
 
     const [weeklyToggle, setWeeklyToggle] = useState(true);
     const [toggle,setToggle] = useState(true);
-    const allUsers =  GetAllUsers();
+    const allUsersUnfiltered =  GetAllUsers();
     const userResult = GetOneUser({userName})
     const result = (userResult[0]);
-    if(!result || !allUsers)
+    if(!result || !allUsersUnfiltered)
         return <div>Loading...</div>
-   
+    const allUsers = allUsersUnfiltered.filter((user) => user.userConsent == true);
     const chartDataSteps = userDataDisplay(result, "steps");
     const chartDataWeight = userDataDisplay(result, "weight");
     const chartDataActive = userDataDisplay(result, "activeMinutes");

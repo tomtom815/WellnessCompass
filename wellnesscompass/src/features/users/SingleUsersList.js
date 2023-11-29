@@ -6,16 +6,10 @@ import UpdateUserInfo from "./UpdateUserInfo";
 import { useNavigate, Link } from "react-router-dom";
 import useLogout from "../../hooks/useLogout";
 import UserData from "./UserData";
+import NavBar from "../../components/NavBar";
 
 const SingleUser = ({ userName }) => {
-  const navigate = useNavigate();
-  const logout = useLogout();
-
-  const signOut = async () => {
-    await logout();
-    navigate("/login");
-  };
-
+ 
   const userResult = GetOneUser({ userName });
   //GetAllUsers();
 
@@ -36,6 +30,7 @@ const SingleUser = ({ userName }) => {
 
   return (
     <main>
+      <NavBar/>
       <UserData userResult={userResult} result={result} /> 
       <DataCharts />
       <br></br>
@@ -43,7 +38,7 @@ const SingleUser = ({ userName }) => {
       <UpdateUserInfo result={result}/> 
       </div>
       
-      <button onClick={signOut}>Sign Out</button>
+     
     </main>
   );
 };

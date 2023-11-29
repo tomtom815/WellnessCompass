@@ -6,35 +6,29 @@ import {
   averageWeeklyMetric,
   compare,
 } from "../statistics/descriptiveStatistics";
-
-import { useNavigate, Link } from "react-router-dom";
-import useLogout from "../../hooks/useLogout";
+import { Link } from "react-router-dom";
 
 //to display user data for the front end.
 import { GetAllUsers } from "../../app/api/fetchAllUsers";
+import NavBar from "../../components/NavBar";
 
 const UsersList = () => {
-  const navigate = useNavigate();
-  const logout = useLogout();
-
-  const signOut = async () => {
-    await logout();
-    navigate("/login");
-  };
-
+  
   
   const usersResult = GetAllUsers();
 
   if (!usersResult)
     //wait for response
     return <div>Loading...?</div>;
+  
+  const filteredUsers = usersResult.filter((user) => user.userConsent == true);
 
-  const userNameArray = usersResult.map((user) => user.username);
+  const userNameArray = filteredUsers.map((user) => user.username);
 
-  let averageStepsArray = usersResult.map((user) =>
+  let averageStepsArray = filteredUsers.map((user) =>
     averageWeeklyMetric(user.steps)
   );
-  const averageActivityArray = usersResult.map((user) =>
+  const averageActivityArray = filteredUsers.map((user) =>
     averageWeeklyMetric(user.activeMinutes)
   );
   const averageValuesObject = userNameArray.map((username, index) => ({
@@ -61,6 +55,7 @@ const UsersList = () => {
 
   return (
     <main>
+      <NavBar/>
       <h1>Weekly Leaderboard</h1>
       <table class="users" id = "minutes">
         <thead>
@@ -98,7 +93,7 @@ const UsersList = () => {
           ))}
         </tbody>
       </table>
-      <button onClick={signOut}>Sign Out</button>
+     
     </main>
   );
 };

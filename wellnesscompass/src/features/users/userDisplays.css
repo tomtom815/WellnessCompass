@@ -33,7 +33,7 @@
     display: flex;
     align-items:center;
     justify-content: space-evenly;
-    
+    flex-wrap: wrap;
     text-align:center;
 }
 
@@ -111,7 +111,7 @@
     background-color: #241483;
     justify-content: space-evenly;
     padding: 10px;
-   
+    flex-wrap: wrap;
     width: 100%;
     
 }
@@ -151,3 +151,10 @@
     max-width: 100%;
   }
   
+
+
+@media screen and (max-width:815px){
+    #left, #right{
+        text-align:center;
+    }
+}

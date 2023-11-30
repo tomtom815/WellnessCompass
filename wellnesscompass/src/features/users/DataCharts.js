@@ -164,7 +164,9 @@ const DataCharts = ({userName}) => {
            
                 <Plot 
                 data = {[userWeekSteps]}
-                layout={[{title:'Test'}, layoutGroup]} /> 
+                layout={[{title:'Test'}, layoutGroup]}
+                useResizeHandler={true} 
+                style= {{width: "100%", height: "100%"}}/> 
               
         
              <div >
@@ -181,7 +183,9 @@ const DataCharts = ({userName}) => {
             data={[
                 {x: chartWeeklyDataActivity[0], y: chartWeeklyDataActivity[1], type: 'bar', name: 'Weekly Activity', marker: {color: 'purple'}, automargin: true}]}
             layout={ 
-                { title: 'Active Minutes', xaxis: {title: {text: 'Date'} }, yaxis: {title: {text: 'Weekly Active Minutes'} }} } />
+                { title: 'Active Minutes', xaxis: {title: {text: 'Date'} }, yaxis: {title: {text: 'Weekly Active Minutes'} }, autosize:true} } 
+            useResizeHandler={true} 
+            style= {{width: "100%", height: "100%"}}/>
               <div>
               <p>Average Active Minutes This Week: {userAverageActivity} </p>
                <p>Population Average: {populationAverageActivity}.</p>
@@ -194,9 +198,12 @@ const DataCharts = ({userName}) => {
             
             <Plot 
             data={[
-                {x: chartWeeklyDataSleep[0], y: chartWeeklyDataSleep[1], type: 'bar', name: 'Weekly Hours Slept',  marker: {color: 'purple'}, automargin: true}]}
+                {x: chartWeeklyDataSleep[0], y: chartWeeklyDataSleep[1], type: 'bar', name: 'Weekly Hours Slept',  marker: {color: 'purple'}}]}
             layout={ 
-                { title: 'Hours Slept', xaxis: {title: {text: 'Date'} }, yaxis: {title: {text: 'Weekly Hours Slept'} }} } />
+                { title: 'Hours Slept', xaxis: {title: {text: 'Date'} }, yaxis: {title: {text: 'Weekly Hours Slept'} }} }
+            useResizeHandler={true} 
+            style= {{width: "100%", height: "100%"}}
+            />
               
                <p>Average Hours Slept This Week: {getUserAverageForBreakDown(chartWeeklyDataSleep[1])} </p>
                
@@ -221,7 +228,9 @@ const DataCharts = ({userName}) => {
         {toggle == "steps" && ( <div id= "stepgraph" style={{minHeight: "555px"}}>
             <Plot 
                 data= {lifeTimeDataStepsDisplay}
-                layout={{barmode: 'group',  automargin: true}}/>
+                layout={{barmode: 'group',  automargin: true}}
+                useResizeHandler={true} 
+                style= {{width: "100%", height: "100%"}}/>
             <div >
              <p>Average Lifetime Steps: {averageLifeTimeSteps}.</p>
              <p>Total Lifetime Steps: {simpleSum(chartDataSteps[1])}.</p>
@@ -235,13 +244,17 @@ const DataCharts = ({userName}) => {
                     { type: 'line', x: chartDataWeight[0],  y: chartDataWeight[1], marker: { color: "rgba(6, 57, 219, 0.4)"}, automargin: true},
                 ]}
                 layout={ 
-                    {  title: 'Weight', xaxis: {title: {text: 'Date'} }, yaxis: {title: {text: 'Weight (lbs)'} }} } />
+                    {  title: 'Weight', xaxis: {title: {text: 'Date'} }, yaxis: {title: {text: 'Weight (lbs)'} }} } 
+                useResizeHandler={true} 
+                style= {{width: "100%", height: "100%"}}/>
             </div>
             )}
         {toggle == "activity" && (<div id= "activeMinutesGraph" style={{minHeight: "555px"}}>
             <Plot
                 data= {lifeTimeDataActivityDisplay}
-                layout={[layoutGroup, {title: "Lifetime Active Minutes"}]}/>
+                layout={[layoutGroup, {title: "Lifetime Active Minutes"}]}
+                useResizeHandler={true} 
+                style= {{width: "100%", height: "100%"}}/>
             <p>Average Lifetime Active Minutes: {averageLifeTimeActivity}.</p>
              <p>Total Lifetime Active Minutes: {simpleSum(chartDataActive[1])}.</p>
             </div>
@@ -252,7 +265,9 @@ const DataCharts = ({userName}) => {
                     { values:[averageLifeTimeActivity/60, getUserAverageForBreakDown(chartWeeklyDataSleep[1]), (24-averageLifeTimeActivity/60-getUserAverageForBreakDown(chartWeeklyDataSleep[1]))], labels: ["Active Hours", "Sleep", "Other"],type: 'pie',marker: {color: ['purple', "blue", "green"]}, automargin: true}]}
                 layout={ {
                      title: 'Average Daily Breakdown',xaxis: {itle: {text: 'Date'} }, yaxis: {title: {text: 'Active Minutes'}}
-                    }} />
+                    }}
+                useResizeHandler={true} 
+                style= {{width: "100%", height: "100%"}} />
                 <p>On average, you spend:</p>
                 <p>
                 {Math.round((averageLifeTimeActivity/60) * 100) / 100} hours a day active.

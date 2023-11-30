@@ -2,10 +2,11 @@
 import React from 'react';
 import { useNavigate, Link } from "react-router-dom";
 import useLogout from '../hooks/useLogout';
-
+import styles from './components.css'
 
 const NavBar = () => {
     const user = localStorage.getItem("userID");
+    
     const navigate = useNavigate();
     const logout = useLogout();
   
@@ -14,12 +15,14 @@ const NavBar = () => {
         navigate("/login");
       };
     const navigation = (
-        <div id = 'navigation'>
-            <Link to = '/users' > <button>Leaderboard</button></Link>
-            <Link to={`/users/${user}`}><button>Profile</button></Link>
-            <button onClick={signOut}>Sign Out</button>
-
-        </div>
+        <nav>
+            <ul>
+                <li><a href = '/users' >Leaderboard</a></li>
+                <li><a href={`/users/${user}`}>Profile</a></li>
+                <li><a href onClick={signOut}>Sign Out</a></li>
+            </ul>
+            
+        </nav>
     )
     return navigation;
 }

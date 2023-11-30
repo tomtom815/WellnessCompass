@@ -1,0 +1,22 @@
+a{
+    text-decoration: none;
+}
+
+a:hover{
+    color:#c6bcff;
+    font-weight: bold;
+}
+ul{
+    text-align: right;
+}
+li{
+  
+    display: inline;
+    padding: 15px;
+}
+
+nav {
+    
+    background-color: #180e51;
+    padding: 30px;
+}

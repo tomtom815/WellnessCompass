@@ -16,7 +16,7 @@ const NavBar = () => {
       };
     const navigation = (
         <nav>
-            <ul>
+            <ul id = "navBarLinks">
                 <li><a href = '/users' >Leaderboard</a></li>
                 <li><a href={`/users/${user}`}>Profile</a></li>
                 <li><a href onClick={signOut}>Sign Out</a></li>

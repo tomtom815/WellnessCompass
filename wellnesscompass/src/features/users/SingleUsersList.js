@@ -29,7 +29,8 @@ const SingleUser = ({ userName }) => {
   
 
   return (
-    <main>
+    <body>
+      <main>
       <NavBar/>
       <UserData userResult={userResult} result={result} /> 
       <DataCharts />
@@ -40,6 +41,8 @@ const SingleUser = ({ userName }) => {
       
      
     </main>
+    </body>
+    
   );
 };
 

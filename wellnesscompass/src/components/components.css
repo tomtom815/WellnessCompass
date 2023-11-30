@@ -1,8 +1,8 @@
-a{
+ul#navBarLinks a{
     text-decoration: none;
 }
 
-a:hover{
+ul#navBarLinks a:hover{
     color:#c6bcff;
     font-weight: bold;
 }

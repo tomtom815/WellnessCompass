@@ -131,9 +131,7 @@ const DataCharts = ({userName}) => {
             <h1>Metrics for Today</h1>
             <h1>{todayStats(result)[0]}</h1>
             </div>
-            
             <div className="left">
-
             <h3>Today's Steps <a className="tooltip2">ⓘ</a></h3>
             <Tooltip anchorSelect=".tooltip2" place="top">
                 <div className="tips" key="tip">
@@ -158,7 +156,7 @@ const DataCharts = ({userName}) => {
                   {message3}
                 </div>
               </Tooltip>
-            <p>{caloriesMET(weight, todayStats(result)[2]) + userBMR(result)}</p>
+            <p>{userBMR(result) == 'N/A' ? userBMR(result) : caloriesMET(weight, todayStats(result)[2]) + userBMR(result)}</p>
             <h3>Calories In</h3>
             <p> {todayStats(result)[3]}</p>
             </div>

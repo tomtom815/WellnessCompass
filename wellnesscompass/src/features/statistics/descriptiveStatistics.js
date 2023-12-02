@@ -7,6 +7,10 @@ const dataPresent = (parameterArray) => {
     return true; 
 }
 
+const caloriesMET = (weight, activeMinutes) => {
+    return Math.round(10 * 3.5 * (weight * 0.45359237) / 200 * activeMinutes);
+     
+}
 //pre-condition: weight is in lb, height is in inches
 const BMI = (userObject) => {
     const BMIArray = [
@@ -65,6 +69,10 @@ const todayStats = (object) => {
         array.push(0);
     else
         array.push(object.activeMinutes[object.activeMinutes.length-1].value)
+    if(object.dailyMeals.length == 0 || object.dailyMeals[object.dailyMeals.length-1]?.date !==today)
+        array.push(0);
+    else
+        array.push(object.dailyMeals[object.dailyMeals.length-1].value)
     return array;
 }
 
@@ -324,4 +332,4 @@ const getUserAverageForBreakDown = (array)=>{
 }
 
 
-export {todayStats, simpleSum, getUserAverageForBreakDown, dataPresent, BMI, averageMetric, compare, averageWeeklyMetric, userBMR, userDataDisplay, averagesDataDisplay, userDataWeeklyDisplay, weeklyPopulationAverage, weeklyStandardDeviation, greaterOrLessThan}
+export {todayStats, simpleSum, getUserAverageForBreakDown, dataPresent, BMI, averageMetric, compare, averageWeeklyMetric, userBMR, userDataDisplay, averagesDataDisplay, userDataWeeklyDisplay, weeklyPopulationAverage, caloriesMET, weeklyStandardDeviation, greaterOrLessThan}

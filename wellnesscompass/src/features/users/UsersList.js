@@ -75,6 +75,7 @@ const UsersList = () => {
           ))}
         </tbody>
       </table>
+     
       <table class = "users" id = "activity">
         <thead>
           <tr>

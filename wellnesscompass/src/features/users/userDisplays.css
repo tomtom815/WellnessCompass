@@ -123,11 +123,11 @@
   
 }
 
-#left{
+.left{
     float: left;
   
 }
-#right{
+.right{
     float: right;
     text-align: right;
 

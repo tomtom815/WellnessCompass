@@ -5,7 +5,7 @@ import Plot from 'react-plotly.js';
 import Plotly from 'react-plotly.js'
 import { Tooltip } from "react-tooltip";
 
-import { averageMetric, userDataDisplay, averagesDataDisplay, userDataWeeklyDisplay, weeklyPopulationAverage, weeklyStandardDeviation, greaterOrLessThan, getUserAverageForBreakDown, simpleSum, todayStats } from '../statistics/descriptiveStatistics';
+import { caloriesMET, userDataDisplay, averagesDataDisplay, userDataWeeklyDisplay, weeklyPopulationAverage, weeklyStandardDeviation, greaterOrLessThan, getUserAverageForBreakDown, simpleSum, todayStats, userBMR } from '../statistics/descriptiveStatistics';
 
 
 const DataCharts = ({userName}) => {
@@ -27,7 +27,7 @@ const DataCharts = ({userName}) => {
     const chartWeeklyDataActivity =userDataWeeklyDisplay(result, "activeMinutes");
     const populationAverageSteps = Math.round(weeklyPopulationAverage(allUsersUnfiltered,"steps"));
     const populationAverageActivity = Math.round(weeklyPopulationAverage(allUsersUnfiltered, "activeMinutes"));
-    
+    const weight = result.weight[result.weight?.length - 1]?.value || 0
     const allTheSteps = allUsers.map((user =>
        user.steps
     )).flat(1)
@@ -36,8 +36,9 @@ const DataCharts = ({userName}) => {
         user.activeMinutes
      )).flat(1)
     
-    const message1 = "The recommended number of daily steps for an adult is 10,000";
-    const message2 = "The recommended number of active minutes for an adult is 30";
+    const message1 = "The recommended number of daily steps for an adult is 10,000.";
+    const message2 = "The recommended number of active minutes for an adult is 30.";
+    const message3 = "An estimation based on user BMR, weight, & activity."
     const userAverageSteps = getUserAverageForBreakDown(chartWeeklyDataSteps[1])
     const userAverageActivity = getUserAverageForBreakDown(chartWeeklyDataActivity[1])
     const averageLifeTimeSteps = getUserAverageForBreakDown(chartDataSteps[1]);
@@ -126,8 +127,13 @@ const DataCharts = ({userName}) => {
   return (
     <div id = "totalContainer">
         <div id = "todayDataContainer">
-            <div id ="left">
+            <div className="left">
             <h1>Metrics for Today</h1>
+            <h1>{todayStats(result)[0]}</h1>
+            </div>
+            
+            <div className="left">
+
             <h3>Today's Steps <a className="tooltip2">ⓘ</a></h3>
             <Tooltip anchorSelect=".tooltip2" place="top">
                 <div className="tips" key="tip">
@@ -135,18 +141,26 @@ const DataCharts = ({userName}) => {
                 </div>
               </Tooltip>
             <p>{todayStats(result)[1] + ' / 10,000'}</p>
-           
-            </div>
-            <div id = "right">
-            
-            <h1>{todayStats(result)[0]}</h1>
-            <h3><a className="tooltip3">ⓘ</a> Today's Active Minutes</h3>
+            <h3>Today's Active Minutes <a className="tooltip3">ⓘ</a></h3>
             <Tooltip anchorSelect=".tooltip3" place="top">
                 <div className="tips" key="tip">
                   {message2}
                 </div>
               </Tooltip>
             <p>{todayStats(result)[2] + ' / 30'}</p>
+           
+            </div>
+            <div className = "right">
+           
+            <h3>Calories Burned  <a className="tooltip4">ⓘ</a></h3>
+            <Tooltip anchorSelect=".tooltip4" place="top">
+                <div className="tips" key="tip">
+                  {message3}
+                </div>
+              </Tooltip>
+            <p>{caloriesMET(weight, todayStats(result)[2]) + userBMR(result)}</p>
+            <h3>Calories In</h3>
+            <p> {todayStats(result)[3]}</p>
             </div>
             
        

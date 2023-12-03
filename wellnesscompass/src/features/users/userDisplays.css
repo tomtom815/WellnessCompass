@@ -9,6 +9,15 @@
     
 }
 
+#leaderboard{
+    padding: 15px;
+    margin: auto;
+}
+
+#titleleader {
+    padding-top: 15px;
+}
+
 .users td, #users th {
     border: 1px solid #ddd;
     padding: 8px;
@@ -27,6 +36,10 @@
 }
 #activity{
     float: right;
+}
+
+h1{
+    text-align: center;
 }
 
 #dataSubContainer{

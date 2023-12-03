@@ -14,7 +14,11 @@ import NavBar from "../../components/NavBar";
 
 const UsersList = () => {
   
-  
+  function Example() {
+    useEffect(() => {
+      document.title = 'My Page Title';
+    }, []);
+  }
   const usersResult = GetAllUsers();
 
   if (!usersResult)
@@ -54,10 +58,12 @@ const UsersList = () => {
   if (!sortBySteps || !sortByMinutes) return <p>Loading...</p>;
 
   return (
+    <body>
     <main>
       <NavBar/>
-      <h1>Weekly Leaderboard</h1>
-      <table class="users" id = "minutes">
+      <h1 id = "titleleader">Weekly Leaderboard</h1>
+      <div id ='leaderboard'>
+      <table className="users" id = "minutes">
         <thead>
           <tr>
             <th>Username</th>
@@ -94,8 +100,12 @@ const UsersList = () => {
           ))}
         </tbody>
       </table>
+      </div>
+      
      
     </main>
+    </body>
+    
   );
 };
 

@@ -8,6 +8,7 @@ import useLogout from "../../hooks/useLogout";
 import UserData from "./UserData";
 import NavBar from "../../components/NavBar";
 
+
 const SingleUser = ({ userName }) => {
  
   const userResult = GetOneUser({ userName });
@@ -25,11 +26,11 @@ const SingleUser = ({ userName }) => {
   if(accessingUser !== currentUserPage ){
     accessView = "none"
   }
-
   
 
   return (
     <body>
+      <title>Your Profile</title>
       <main>
       <NavBar/>
       <UserData userResult={userResult} result={result} /> 

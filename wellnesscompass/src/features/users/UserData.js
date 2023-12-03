@@ -63,9 +63,11 @@ const UserData = ({ userResult, result }) => {
               </Tooltip>
               : <span className="values" key={userBMR(result)}>{userBMR(result)}</span>
             </h3>
+            <br></br>
           </section>
+          
         </div>
-        
+       
       ))}
       </div>
   )

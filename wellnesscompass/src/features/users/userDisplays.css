@@ -12,6 +12,9 @@
 #leaderboard{
     padding: 15px;
     margin: auto;
+    width: 100%;
+    display: grid;
+ 
 }
 
 #titleleader {

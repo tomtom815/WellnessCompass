@@ -20,3 +20,12 @@ nav {
     background-color: #180e51;
     padding: 30px;
 }
+
+
+@media screen and (max-width:815px){
+    nav {
+        font-size:medium;
+        font-weight: bold;
+    }
+   
+}

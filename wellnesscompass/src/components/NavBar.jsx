@@ -2,7 +2,7 @@
 import React from 'react';
 import { useNavigate, Link } from "react-router-dom";
 import useLogout from '../hooks/useLogout';
-import styles from './components.css'
+import './components.css'
 
 const NavBar = () => {
     const user = localStorage.getItem("userID");

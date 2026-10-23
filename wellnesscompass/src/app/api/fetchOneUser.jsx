@@ -11,10 +11,9 @@ export const GetOneUser = ({ userName }) => {
   const fetchUserData = async () => {
     try {
       const response = await axiosPrivate.get(url, { params: userName });
-      console.log('response:', response.data);
       setUserResult(response.data);
     } catch (error) {
-      console.error('Error fetching user data:', error);
+      console.error('Request failed.');
     }
   };
 

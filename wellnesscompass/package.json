@@ -8,18 +8,14 @@
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@fvilers/disable-react-devtools": "^1.3.0",
     "@reduxjs/toolkit": "^1.9.5",
-    "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
     "axios": "^1.5.0",
-    "plotly.js": "^2.26.0",
+    "plotly.js": "^4.1.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.11.0",
     "react-plotly.js": "^2.6.0",
     "react-redux": "^8.1.2",
-    "react-router-dom": "^6.15.0",
-    "react-scripts": "^5.0.1",
+    "react-router-dom": "^7.18.4",
     "react-tooltip": "^5.21.4",
     "redux": "^4.2.1",
     "statistics": "^3.3.0",
@@ -27,16 +23,10 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts --openssl-legacy-provider start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+    "start": "vite",
+    "build": "vite build",
+    "test": "node --test test/*.test.cjs && vitest run",
+    "test:watch": "vitest"
   },
   "browserslist": {
     "production": [
@@ -49,5 +39,17 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "engines": {
+    "node": "24.x"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "@vitejs/plugin-react": "^6.1.2",
+    "jsdom": "^30.1.3",
+    "vite": "^8.3.5",
+    "vitest": "^5.0.5"
   }
 }

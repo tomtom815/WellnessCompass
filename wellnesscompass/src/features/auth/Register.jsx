@@ -83,8 +83,6 @@ const Register = () => {
     // The result is a boolean value indicating whether the input matches the pattern.
     // The validation result is logged for debugging purposes and then stored in the "validFirstName" state.
     const result = NAME_REGEX.test(firstName);
-    console.log(result);
-    console.log(username);
     setValidFirstName(result);
   }, [firstName]);
 
@@ -92,24 +90,18 @@ const Register = () => {
   useEffect(() => {
     // Similar to the previous effect
     const result = NAME_REGEX.test(lastName);
-    console.log(result);
-    console.log(username);
     setValidLastName(result);
   }, [lastName]);
 
   // Use Effect to validate and update the "Gender" input
   useEffect(() => {
     const result = GENDER_REGEX.test(gender);
-    console.log(result);
-    console.log(gender);
     setValidGender(result);
   }, [gender]);
 
   // Use effect to validate and update the "Age" input
   useEffect(() => {
     const result = AGE_REGEX.test(age);
-    console.log(result);
-    console.log(age);
     setValidAge(result);
   }, [age]);
 
@@ -117,8 +109,6 @@ const Register = () => {
   useEffect(() => {
     // Similar to the previous effect
     const result = USERNAME_REGEX.test(username);
-    console.log(result);
-    console.log(username);
     setValidUsername(result);
   }, [username]);
 
@@ -130,8 +120,6 @@ const Register = () => {
     // The validation result is logged, and "validPassword" is updated accordingly.
     // Additionally, it checks if the "password" matches the "matchPassword" input for password confirmation.
     const result = PASSWORD_REGEX.test(password);
-    console.log(result);
-    console.log(password);
     setValidPassword(result);
     const match = password === matchPassword;
     setValidMatch(match);
@@ -186,9 +174,6 @@ const Register = () => {
           withCredentials: true,
         }
       );
-      console.log(response.data);
-      console.log(response.accessToken);
-      console.log(JSON.stringify(response));
       setSuccess(true);
 
       // Clear input fields. Set state back to empty strings
@@ -205,10 +190,6 @@ const Register = () => {
       } else if (err.response?.status === 409) {
         setErrMsg("Username Taken");
       } else {
-        console.log(err.response);
-        console.log(err.message);
-        console.log(err.name);
-        console.log(err.stack);
 
         setErrMsg("Registration Failed");
       }

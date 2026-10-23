@@ -83,7 +83,6 @@ function UpdateUserInfo({ result, onSubmission }) {
 
     try {
       const response = await axiosPrivate.patch('http://localhost:3500/users', formData);
-      console.log('Updated resource:', response.data);
       document.getElementById('weight').value = '';
       document.getElementById('height').value = '';
       document.getElementById('steps').value = '';
@@ -96,12 +95,12 @@ function UpdateUserInfo({ result, onSubmission }) {
       });
       
     } catch (error) {
-      console.error('Error updating resource:', error);
+      console.error('Request failed.');
       if (error.response && error.response.status === 401) {
         try {
           await refreshAccessToken();
         } catch (refreshError) {
-          console.error('Error refreshing token:', refreshError);
+          console.error('Request failed.');
         }
       }
     }

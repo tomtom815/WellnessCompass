@@ -176,7 +176,7 @@ const DataCharts = ({userName}) => {
            
                 <Plot 
                 data = {[userWeekSteps]}
-                layout={[{title:'Test'}, layoutGroup]}
+                layout={{...layoutGroup, title: {text: 'Test'}}}
                 useResizeHandler={true} 
                 style= {{width: "100%", height: "100%"}}/> 
               
@@ -195,7 +195,7 @@ const DataCharts = ({userName}) => {
             data={[
                 {x: chartWeeklyDataActivity[0], y: chartWeeklyDataActivity[1], type: 'bar', name: 'Weekly Activity', marker: {color: 'purple'}, automargin: true}]}
             layout={ 
-                { title: 'Active Minutes', xaxis: {title: {text: 'Date'} }, yaxis: {title: {text: 'Weekly Active Minutes'} }, autosize:true} } 
+                { title: {text: 'Active Minutes'}, xaxis: {title: {text: 'Date'} }, yaxis: {title: {text: 'Weekly Active Minutes'} }, autosize:true} }
             useResizeHandler={true} 
             style= {{width: "100%", height: "100%"}}/>
               <div>
@@ -212,7 +212,7 @@ const DataCharts = ({userName}) => {
             data={[
                 {x: chartWeeklyDataSleep[0], y: chartWeeklyDataSleep[1], type: 'bar', name: 'Weekly Hours Slept',  marker: {color: 'purple'}}]}
             layout={ 
-                { title: 'Hours Slept', xaxis: {title: {text: 'Date'} }, yaxis: {title: {text: 'Weekly Hours Slept'} }} }
+                { title: {text: 'Hours Slept'}, xaxis: {title: {text: 'Date'} }, yaxis: {title: {text: 'Weekly Hours Slept'} }} }
             useResizeHandler={true} 
             style= {{width: "100%", height: "100%"}}
             />
@@ -253,10 +253,10 @@ const DataCharts = ({userName}) => {
         {toggle == "weight" && ( <div id= "weightGraph" style={{minHeight: "555px"}}>
         <Plot
                 data={[ 
-                    { type: 'line', x: chartDataWeight[0],  y: chartDataWeight[1], marker: { color: "rgba(6, 57, 219, 0.4)"}, automargin: true},
+                    { type: 'scatter', mode: 'lines', x: chartDataWeight[0],  y: chartDataWeight[1], marker: { color: "rgba(6, 57, 219, 0.4)"}, automargin: true},
                 ]}
                 layout={ 
-                    {  title: 'Weight', xaxis: {title: {text: 'Date'} }, yaxis: {title: {text: 'Weight (lbs)'} }} } 
+                    {  title: {text: 'Weight'}, xaxis: {title: {text: 'Date'} }, yaxis: {title: {text: 'Weight (lbs)'} }} }
                 useResizeHandler={true} 
                 style= {{width: "100%", height: "100%"}}/>
             </div>
@@ -264,7 +264,7 @@ const DataCharts = ({userName}) => {
         {toggle == "activity" && (<div id= "activeMinutesGraph" style={{minHeight: "555px"}}>
             <Plot
                 data= {lifeTimeDataActivityDisplay}
-                layout={[layoutGroup, {title: "Lifetime Active Minutes"}]}
+                layout={{...layoutGroup, title: {text: "Lifetime Active Minutes"}}}
                 useResizeHandler={true} 
                 style= {{width: "100%", height: "100%"}}/>
             <p>Average Lifetime Active Minutes: {averageLifeTimeActivity}.</p>
@@ -276,7 +276,7 @@ const DataCharts = ({userName}) => {
                 data={[
                     { values:[averageLifeTimeActivity/60, getUserAverageForBreakDown(chartWeeklyDataSleep[1]), (24-averageLifeTimeActivity/60-getUserAverageForBreakDown(chartWeeklyDataSleep[1]))], labels: ["Active Hours", "Sleep", "Other"],type: 'pie',marker: {color: ['purple', "blue", "green"]}, automargin: true}]}
                 layout={ {
-                     title: 'Average Daily Breakdown',xaxis: {itle: {text: 'Date'} }, yaxis: {title: {text: 'Active Minutes'}}
+                     title: {text: 'Average Daily Breakdown'},xaxis: {itle: {text: 'Date'} }, yaxis: {title: {text: 'Active Minutes'}}
                     }}
                 useResizeHandler={true} 
                 style= {{width: "100%", height: "100%"}} />

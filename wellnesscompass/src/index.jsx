@@ -9,7 +9,7 @@ import { disableReactDevTools } from '@fvilers/disable-react-devtools';
 import {store} from './app/store'
 import { Provider } from 'react-redux'
 
-if (process.env.NODE_ENV === 'production') {
+if (import.meta.env.PROD) {
   disableReactDevTools();
 }
 const root = ReactDOM.createRoot(document.getElementById('root'));

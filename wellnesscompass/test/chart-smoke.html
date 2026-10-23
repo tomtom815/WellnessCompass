@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<title>Synthetic Plotly compatibility check</title>
+<h1>Synthetic Plotly compatibility check</h1>
+<p id="result">Checking three chart types. No backend requests or real health records.</p>
+<div id="bar"></div><div id="scatter"></div><div id="pie"></div>
+<script type="module">
+import Plotly from 'plotly.js/dist/plotly.js';
+const cases = [
+  ['bar', { type: 'bar', x: ['A', 'B'], y: [2, 3] }, '.barlayer path'],
+  ['scatter', { type: 'scatter', mode: 'lines', x: [1, 2], y: [3, 4] }, '.scatterlayer path.js-line'],
+  ['pie', { type: 'pie', labels: ['A', 'B'], values: [2, 3] }, '.pielayer .slice'],
+];
+try {
+  for (const [id, trace, selector] of cases) {
+    const element = document.getElementById(id);
+    const title = `Synthetic ${id} chart`;
+    await Plotly.newPlot(element, [trace], { title: { text: title }, width: 500, height: 280 }, { displayModeBar: false });
+    if (!element.querySelector(selector) || element.querySelector('.gtitle')?.textContent !== title) {
+      throw new Error(`${id} output or title missing`);
+    }
+  }
+  document.getElementById('result').textContent = 'PASS: bar, line and pie render with the patched Plotly package. Synthetic data only.';
+} catch (error) {
+  document.getElementById('result').textContent = `FAIL: ${error.message}`;
+  throw error;
+}
+</script>
+</html>
